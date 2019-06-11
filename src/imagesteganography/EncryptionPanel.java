@@ -310,7 +310,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             sendButton.setVisible(true);
             saveButton.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please provide all required data.");
+            JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please enter/re-check all input data.");
         }
     }//GEN-LAST:event_embedButtonActionPerformed
 
@@ -327,7 +327,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         RenderedImage im = (RenderedImage) img;
-        saveFileChooser = new JFileChooser();
+        saveFileChooser = new JFileChooser("Save File");
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File embedFile = saveFileChooser.getSelectedFile();
             try {

@@ -48,34 +48,17 @@ public class MailDialog extends javax.swing.JDialog {
         setTitle("Send Mail");
         setResizable(false);
 
-        jLabel1.setText("To:");
-
-        toField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toFieldActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("*To:");
 
         fromField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        fromField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fromFieldActionPerformed(evt);
-            }
-        });
 
-        jLabel2.setText("From:");
+        jLabel2.setText("*From:");
 
         jLabel3.setText("Attachment:");
 
         attachmentField.setBackground(new java.awt.Color(255, 255, 255));
-        attachmentField.setText("1 image attached.");
+        attachmentField.setText("1 image attached (FinalImage.png)");
         attachmentField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        subjectField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subjectFieldActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Subject:");
 
@@ -166,79 +149,79 @@ public class MailDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void toFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toFieldActionPerformed
-  
-    }//GEN-LAST:event_toFieldActionPerformed
-
-    private void fromFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fromFieldActionPerformed
-
-    private void subjectFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_subjectFieldActionPerformed
-
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         if("".equals(toField.getText()) || "".equals(fromField.getText()))
         {
             JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please enter all required details");
         }
         else{
-            JPasswordField pwd = new JPasswordField();
-            Image image = EncryptionPanel.img;
-            String pass = null;
-            int result = JOptionPane.showConfirmDialog(null, pwd,"Enter your mail Password",JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION){
-                String to = toField.getText();
-                final String from = fromField.getText();
-                String sub = subjectField.getText();
-                String msg = msgArea.getText();
-                pass = pwd.getText();
-                final String password = pass;
-                //Get properties object
-                Properties props = new Properties();
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.socketFactory.class",    "javax.net.ssl.SSLSocketFactory");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.port", "465");
+            if(MethodsUsed.networkConnection() == 1){
+                try{
+                    JPasswordField pwd = new JPasswordField();
+                    Image image = EncryptionPanel.img;
+                    int result = JOptionPane.showConfirmDialog(null, pwd,"Enter your email Password",JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION){
+                        String sub="", msg="";
+                        String to = toField.getText();
+                        final String from = fromField.getText();
+                        try{
+                            sub = subjectField.getText();
+                            msg = msgArea.getText();
+                        } catch(Exception e){}
+                        String pass = pwd.getText();
+                        final String password = pass;
+                        //Get properties object
+                        Properties props = new Properties();
+                        props.put("mail.smtp.host", "smtp.gmail.com");
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        props.put("mail.smtp.auth", "true");
+                        props.put("mail.smtp.port", "465");
 
-                //get Session
-                Session session = Session.getDefaultInstance(props,
-                    new javax.mail.Authenticator()
-                    {
-                        protected PasswordAuthentication getPasswordAuthentication()
-                        {
-                            return new PasswordAuthentication(from, password);
-                        }
-                    });
-                    //compose message
-                    try {
-                        MimeMessage message = new MimeMessage(session);
-                        message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-                        message.setSubject(sub);
-                        message.setText(msg);
-                        File embedFile = new File("FinalImage.png");
+                        //get Session
+                        Session session = Session.getDefaultInstance(props,
+                            new javax.mail.Authenticator()
+                            {
+                                protected PasswordAuthentication getPasswordAuthentication()
+                                {
+                                    return new PasswordAuthentication(from, password);
+                                }
+                            });
+                        //compose message
                         try {
-                            ImageIO.write((RenderedImage) image, "png", embedFile);
-                        } catch (IOException ex) {
-                            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                            MimeMessage message = new MimeMessage(session);
+                            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+                            message.setSubject(sub);
+                            message.setText(msg);
+                            File embedFile = new File("FinalImage.png");
+                            try {
+                                ImageIO.write((RenderedImage) image, "png", embedFile);
+                            } catch (IOException ex) {
+                                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
-                        Multipart emailContent = new MimeMultipart();
-                        MimeBodyPart attachment = new MimeBodyPart();
-                        attachment.attachFile("FinalImage.png");
-                        emailContent.addBodyPart(attachment);
-                        message.setContent(emailContent);
-                        //send message
-                        Transport.send(message);
-                        embedFile.delete();
-                        JOptionPane.showMessageDialog(new JFrame(),"Message sent!");
-                    } catch (MessagingException e){
-                        JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Incorrect email or password.");
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please Re-check provided informations.");
+                            Multipart emailContent = new MimeMultipart();
+                            MimeBodyPart attachment = new MimeBodyPart();
+                            attachment.attachFile("FinalImage.png");
+                            System.out.println("here");
+                            emailContent.addBodyPart(attachment);
+                            message.setContent(emailContent);
+                            //send message
+                            Transport.send(message);
+                            JOptionPane.showMessageDialog(new JFrame(),"Message sent!");
+                        }catch (MessagingException e) {throw new RuntimeException(e);
+                        }catch (Exception ex) {}   
+                    }
+                }catch (Exception ex) {
+                        JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please recheck all provided information");
+                        System.out.println(ex);
+                } finally {
+                    File embedFile = new File("FinalImage.png");
+                    embedFile.delete();
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please check your internet connection.");
             }
         }
     }//GEN-LAST:event_sendButtonActionPerformed
@@ -247,9 +230,6 @@ public class MailDialog extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

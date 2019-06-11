@@ -1,8 +1,14 @@
 package imagesteganography;
 
 import static imagesteganography.ImageSteganography.layeredPane;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.Key;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JPanel;
 
@@ -37,5 +43,15 @@ public class MethodsUsed {
             k = k+"*";
         }
         return k;
+    }
+    
+    public static int networkConnection(){
+        try {
+            final URL url = new URL("http://www.google.com");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            return 1;
+            }catch (IOException ex) { }
+        return 0;
     }
 }

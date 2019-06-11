@@ -107,13 +107,10 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="To:"/>
+        <Property name="text" type="java.lang.String" value="*To:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="toField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="fromField">
       <Properties>
@@ -125,13 +122,10 @@
           </Border>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fromFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="From:"/>
+        <Property name="text" type="java.lang.String" value="*From:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -144,7 +138,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="1 image attached."/>
+        <Property name="text" type="java.lang.String" value="1 image attached (FinalImage.png)"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder>
@@ -155,9 +149,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="subjectField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subjectFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>

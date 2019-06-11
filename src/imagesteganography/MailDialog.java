@@ -179,66 +179,68 @@ public class MailDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_subjectFieldActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        JPasswordField pwd = new JPasswordField();
-        String sub="", msg="";
-        Image image = EncryptionPanel.img;
-        String pass = null;
-        int result = JOptionPane.showConfirmDialog(null, pwd,"Enter your mail Password",JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION){
-            pass = pwd.getText();
+        if("".equals(toField.getText()) || "".equals(fromField.getText()))
+        {
+            JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please enter all required details");
+        }
+        else{
+            JPasswordField pwd = new JPasswordField();
+            Image image = EncryptionPanel.img;
+            String pass = null;
+            int result = JOptionPane.showConfirmDialog(null, pwd,"Enter your mail Password",JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION){
+                String to = toField.getText();
+                final String from = fromField.getText();
+                String sub = subjectField.getText();
+                String msg = msgArea.getText();
+                pass = pwd.getText();
+                final String password = pass;
+                //Get properties object
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class",    "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
 
-            final String password = pass;
-            String to = toField.getText();
-            final String from = fromField.getText();
-            try{
-            sub = subjectField.getText();
-            msg = msgArea.getText();
-            }catch(Exception e){}
-
-            //Get properties object
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.socketFactory.port", "465");
-            props.put("mail.smtp.socketFactory.class",    "javax.net.ssl.SSLSocketFactory");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "465");
-
-            //get Session
-            Session session = Session.getDefaultInstance(props,
-                new javax.mail.Authenticator()
-                {
-                    protected PasswordAuthentication getPasswordAuthentication()
+                //get Session
+                Session session = Session.getDefaultInstance(props,
+                    new javax.mail.Authenticator()
                     {
-                        return new PasswordAuthentication(from, password);
-                    }
-                });
-                //compose message
-                try {
-                    MimeMessage message = new MimeMessage(session);
-                    message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-                    message.setSubject(sub);
-                    message.setText(msg);
-                    File embedFile = new File("FinalImage.png");
+                        protected PasswordAuthentication getPasswordAuthentication()
+                        {
+                            return new PasswordAuthentication(from, password);
+                        }
+                    });
+                    //compose message
                     try {
-                        ImageIO.write((RenderedImage) image, "png", embedFile);
-                    } catch (IOException ex) {
-                        Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                        MimeMessage message = new MimeMessage(session);
+                        message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+                        message.setSubject(sub);
+                        message.setText(msg);
+                        File embedFile = new File("FinalImage.png");
+                        try {
+                            ImageIO.write((RenderedImage) image, "png", embedFile);
+                        } catch (IOException ex) {
+                            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
-                    Multipart emailContent = new MimeMultipart();
-                    MimeBodyPart attachment = new MimeBodyPart();
-                    attachment.attachFile("FinalImage.png");
-                    emailContent.addBodyPart(attachment);
-                    message.setContent(emailContent);
-                    //send message
-                    Transport.send(message);
-                    embedFile.delete();
-                    JOptionPane.showMessageDialog(new JFrame(),"Message sent!");
-                } catch (MessagingException e) {throw new RuntimeException(e);} catch (IOException ex) {
+                        Multipart emailContent = new MimeMultipart();
+                        MimeBodyPart attachment = new MimeBodyPart();
+                        attachment.attachFile("FinalImage.png");
+                        emailContent.addBodyPart(attachment);
+                        message.setContent(emailContent);
+                        //send message
+                        Transport.send(message);
+                        embedFile.delete();
+                        JOptionPane.showMessageDialog(new JFrame(),"Message sent!");
+                    } catch (MessagingException e){
+                        JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Incorrect email or password.");
+                } catch (IOException ex) {
                     JOptionPane.showMessageDialog(new JFrame(),"ERROR!! Please Re-check provided informations.");
-                    Logger.getLogger(MailDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

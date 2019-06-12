@@ -1,14 +1,11 @@
 package imagesteganography;
 
-import static imagesteganography.ImageSteganography.layeredPane;
+import static imagesteganography.StartProgram.layeredPane;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.Key;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JPanel;
 

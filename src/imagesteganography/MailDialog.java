@@ -203,7 +203,6 @@ public class MailDialog extends javax.swing.JDialog {
                             Multipart emailContent = new MimeMultipart();
                             MimeBodyPart attachment = new MimeBodyPart();
                             attachment.attachFile("FinalImage.png");
-                            System.out.println("here");
                             emailContent.addBodyPart(attachment);
                             message.setContent(emailContent);
                             //send message

@@ -3,9 +3,13 @@ package Client_Server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Homepage extends javax.swing.JFrame {
-
+    static Server server;
+    static Client client;
+    
     public Homepage() {
         initComponents();
         setLocationRelativeTo(null);
@@ -33,6 +37,11 @@ public class Homepage extends javax.swing.JFrame {
         });
 
         jButton2.setText("Stop Server");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Start Connection");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -42,6 +51,11 @@ public class Homepage extends javax.swing.JFrame {
         });
 
         jButton10.setText("Stop Connection");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Client Side");
@@ -88,16 +102,43 @@ public class Homepage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Server().setVisible(true);
+        server = new Server();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        try {
-            new Client().setVisible(true);
-        } catch (IOException ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        client = new Client();
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(Server.s != null){
+            try{
+                Server.s.close();
+                Server.cs.close();
+                server.setVisible(false);
+                JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
+            }catch (IOException ex) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Server not started yet.");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        if(Client.con != null){
+                try{
+                Client.con.close();
+                client.setVisible(false);
+                JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
+            } catch (IOException ex) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Connection not established yet.");
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

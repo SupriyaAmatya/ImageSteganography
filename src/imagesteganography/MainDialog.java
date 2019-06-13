@@ -1,5 +1,4 @@
 package imagesteganography;
-import Client_Server.*;
 
 public class MainDialog extends javax.swing.JDialog {
 

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EncryptionPanel extends javax.swing.JPanel{
@@ -29,6 +28,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
     static BufferedImage img;
     
     public EncryptionPanel() {
+        
         initComponents();
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
@@ -331,13 +331,13 @@ public class EncryptionPanel extends javax.swing.JPanel{
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args){
-        JFrame f = new JFrame(); 
+        JFrame f = new JFrame("Encryption");
         f.add(new EncryptionPanel());
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(900,720);
+        f.setVisible(true);
         f.setResizable(false);
         f.setLocationRelativeTo(null);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
 

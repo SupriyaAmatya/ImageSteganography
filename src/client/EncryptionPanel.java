@@ -33,8 +33,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
         sendButton.setVisible(false);
-        saveButton.setVisible(false);
-        
+        saveButton.setVisible(false);   
     }
     
     @SuppressWarnings("unchecked")
@@ -332,14 +331,5 @@ public class EncryptionPanel extends javax.swing.JPanel{
     private javax.swing.JScrollPane stegoImagePane;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String[] args){
-        JFrame f = new JFrame(); 
-        f.add(new EncryptionPanel());
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(900,720);
-        f.setResizable(false);
-        f.setLocationRelativeTo(null);
-    }
 }
 

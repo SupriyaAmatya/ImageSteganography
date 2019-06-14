@@ -1,11 +1,11 @@
-package client;
+package server;
 
 import javax.swing.JFrame;
 
-public class ClientFrame {
+public class EncryptionFrame {
     JFrame frame;
     EncryptionPanel encryptionPanel;
-    ClientFrame(){
+    EncryptionFrame(){
         frame = new JFrame("Encryption");
         encryptionPanel = new EncryptionPanel();
         frame.add(encryptionPanel);

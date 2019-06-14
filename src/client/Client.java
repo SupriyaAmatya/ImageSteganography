@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
+//import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
 public class Client extends javax.swing.JFrame {
     Socket con;
@@ -30,14 +30,6 @@ public class Client extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
-//        try{
-//            con=new Socket("localHost", port);
-//            clientDisplay.append("  Connected to server...\n");
-//        }
-//        catch(Exception e){
-//            JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not connect to Server.");
-//            setVisible(false);
-//        }
     }
    
     public void startRunning()
@@ -69,18 +61,18 @@ public class Client extends javax.swing.JFrame {
       do{
             try
             {
-                Object o = input.readObject();
-                if("String".equals(typeof(o))){
+//                Object o = input.readObject();
+//                if("String".equals(typeof(o))){
                     message = (String) input.readObject();
                     clientDisplay.append("\n  "+message);
-                }
-                else{
-                    BufferedImage image = ImageIO.read(con.getInputStream());
-                    clientDisplay.append("\n  Server: ");
-                    clientDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
-                }
+//                }
+//                else{
+//                    BufferedImage image = ImageIO.read(con.getInputStream());
+//                    clientDisplay.append("\n  Server: ");
+//                    clientDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
+//                }
             }
-            catch(ClassNotFoundException classNotFoundException) { }
+            catch(ClassNotFoundException e) { }
       }while(!message.equals("Server: END"));
     }
     
@@ -113,8 +105,9 @@ public class Client extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         clientSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client");
 
         clientDisplay.setBackground(new java.awt.Color(246, 245, 245));
@@ -128,7 +121,7 @@ public class Client extends javax.swing.JFrame {
         clientText.setRows(5);
         jScrollPane6.setViewportView(clientText);
 
-        jButton11.setText("jButton6");
+        jButton11.setText("Encrypt");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
@@ -145,6 +138,13 @@ public class Client extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("CLIENT SIDE...");
 
+        jButton12.setText("Stop Connection");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,8 +159,9 @@ public class Client extends javax.swing.JFrame {
                             .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                             .addComponent(clientSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 138, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -171,16 +172,18 @@ public class Client extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton12))
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(clientSend)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(535, Short.MAX_VALUE)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
@@ -190,7 +193,7 @@ public class Client extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        new EncryptionPanel();
+        new EncryptionFrame();
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void clientSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientSendActionPerformed
@@ -198,11 +201,33 @@ public class Client extends javax.swing.JFrame {
         clientText.setText("");
     }//GEN-LAST:event_clientSendActionPerformed
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        if(con != null){
+            try{
+                con.close();
+                setVisible(false);
+                JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Connection not established yet.");
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    public static void main(String[] args) 
+    {
+        Client client=new Client();
+        client.startRunning();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea clientDisplay;
     private javax.swing.JButton clientSend;
     private javax.swing.JTextArea clientText;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;

@@ -8,9 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
+//import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
 public class Server extends javax.swing.JFrame {
     ServerSocket s;
@@ -43,13 +45,14 @@ public class Server extends javax.swing.JFrame {
                     output.flush();
                     input = new ObjectInputStream(cs.getInputStream());
                     whileChatting();
-                }catch(EOFException eofException){ }
+                }catch(EOFException eofException){
+                    JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
+                    setVisible(false);
+                }
             }
         }
         catch(IOException ioException)
         {
-            JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
-            setVisible(false);
             ioException.printStackTrace();
         }
     }
@@ -60,17 +63,16 @@ public class Server extends javax.swing.JFrame {
         do{
             try
             {
-                Object o = input.readObject();
-                if("String".equals(typeof(o))){
+//                Object o = input.readObject();
+//                if("String".equals(typeof(o))){
                     message = (String) input.readObject();
                     serverDisplay.append("\n  "+message);
-                    serverDisplay.add(new JLabel(message));
-                }
-                else{
-                    BufferedImage image = ImageIO.read(cs.getInputStream());
-                    serverDisplay.append("\n  Client: ");
-                    serverDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
-                }
+//                }
+//                else{
+//                    BufferedImage image = ImageIO.read(cs.getInputStream());
+//                    serverDisplay.append("\n  Client: ");
+//                    serverDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
+//                }
             }catch(ClassNotFoundException classNotFoundException){ }
         }while(!message.equals("Client: END"));
     }
@@ -104,8 +106,9 @@ public class Server extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         serverSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
 
         serverDisplay.setBackground(new java.awt.Color(246, 245, 245));
@@ -136,6 +139,13 @@ public class Server extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("SERVER SIDE...");
 
+        jButton2.setText("Stop Server");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,29 +154,32 @@ public class Server extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(serverSend, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addComponent(jScrollPane1)
-                    .addGap(7, 7, 7)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 511, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(serverSend))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,7 +195,7 @@ public class Server extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        new ServerFrame();
+        new EncryptionFrame();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void serverSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverSendActionPerformed
@@ -190,7 +203,28 @@ public class Server extends javax.swing.JFrame {
 	serverText.setText("");
     }//GEN-LAST:event_serverSendActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(s!=null){
+            try{
+                s.close();
+                setVisible(false);
+                JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Server not started yet.");  
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public static void main(String[] args) 
+    {
+        Server server=new Server();
+        server.startRunning();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

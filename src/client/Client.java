@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ public class Client extends javax.swing.JFrame {
     ObjectInputStream input;
     String message="", serverIP="127.0.0.1";
     int port;
+    static Client client;
     
     public Client(){
         initComponents();
@@ -36,43 +38,39 @@ public class Client extends javax.swing.JFrame {
     {
        try
        {
-            clientDisplay.append("\n  Attempting Connection ...");
+            clientDisplay.setText(clientDisplay.getText()+"\n  Attempting Connection ...");
             try
             {
                 con = new Socket(InetAddress.getByName(serverIP),port);
             }catch(IOException e){ }
             
-            clientDisplay.append("\n  Connected to: " + con.getInetAddress().getHostName());
+            clientDisplay.setText(clientDisplay.getText()+"\n  Connected to: " + con.getInetAddress().getHostName());
             output = new ObjectOutputStream(con.getOutputStream());
             output.flush();
             input = new ObjectInputStream(con.getInputStream());
             whileChatting();
        }
-       catch(IOException ioException)
+       catch(Exception e)
        {
            JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not connect to Server.");
            setVisible(false);
-           ioException.printStackTrace();
+           e.printStackTrace();
        }
     }
     
-    private void whileChatting() throws IOException
+    private void whileChatting() throws IOException, ClassNotFoundException
     {
       do{
-            try
-            {
-//                Object o = input.readObject();
-//                if("String".equals(typeof(o))){
-                    message = (String) input.readObject();
-                    clientDisplay.append("\n  "+message);
-//                }
-//                else{
-//                    BufferedImage image = ImageIO.read(con.getInputStream());
-//                    clientDisplay.append("\n  Server: ");
-//                    clientDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
-//                }
-            }
-            catch(ClassNotFoundException e) { }
+          Object o = input.readObject();
+          if("String".equals(o.getClass().getSimpleName())){
+              message = (String) input.readObject();
+              clientDisplay.setText(clientDisplay.getText()+"\n  Server: "+message);
+          }
+          else{
+              BufferedImage image = (BufferedImage) input.readObject();
+              clientDisplay.setText(clientDisplay.getText()+("\n  Server"));
+              clientDisplay.add(new JLabel((Icon) image));
+          }
       }while(!message.equals("Server: END"));
     }
     
@@ -80,42 +78,39 @@ public class Client extends javax.swing.JFrame {
     {
         try
         {
-            output.writeObject("Client: " + message);
+            output.writeObject(message);
             output.flush();
-            clientDisplay.append("\n  Client: "+message);
+            clientDisplay.setText(clientDisplay.getText()+"\n  Client: "+message);
         }
         catch(IOException ioException)
         {
-            clientDisplay.append("\n  Unable to Send Message.");
+            clientDisplay.setText(clientDisplay.getText()+"\n  Unable to Send Message.");
         }
     }
     
     public void sendImage() throws IOException{
-        ImageIO.write(EncryptionPanel.img, "PNG", con.getOutputStream());
+        output.writeObject(EncryptionPanel.img);
+        output.flush();
+        clientDisplay.setText(clientDisplay.getText()+"\n  Client: ");
+        clientDisplay.add(new JLabel((Icon) EncryptionPanel.img));
+//        ImageIO.write(EncryptionPanel.img, "PNG", con.getOutputStream());
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane5 = new javax.swing.JScrollPane();
-        clientDisplay = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
         clientText = new javax.swing.JTextArea();
         jButton11 = new javax.swing.JButton();
         clientSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        clientDisplay = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client");
-
-        clientDisplay.setBackground(new java.awt.Color(246, 245, 245));
-        clientDisplay.setColumns(20);
-        clientDisplay.setRows(5);
-        clientDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        clientDisplay.setEnabled(false);
-        jScrollPane5.setViewportView(clientDisplay);
 
         clientText.setColumns(20);
         clientText.setRows(5);
@@ -145,6 +140,8 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(clientDisplay);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,7 +149,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -175,9 +172,9 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton12))
-                .addGap(1, 1, 1)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(clientSend)
@@ -202,34 +199,29 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_clientSendActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        if(con != null){
-            try{
-                con.close();
-                setVisible(false);
-                JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
-        else{
+        try{
+            con.close();
+            setVisible(false);
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(new JFrame("Message"), "Connection not established yet.");
         }
     }//GEN-LAST:event_jButton12ActionPerformed
-
-    public static void main(String[] args) 
+    
+    public static void main(String[] args) throws ClassNotFoundException 
     {
-        Client client=new Client();
+        client=new Client();
         client.startRunning();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea clientDisplay;
+    private javax.swing.JEditorPane clientDisplay;
     private javax.swing.JButton clientSend;
     private javax.swing.JTextArea clientText;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
     // End of variables declaration//GEN-END:variables
 }

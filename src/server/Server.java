@@ -20,6 +20,8 @@ public class Server extends javax.swing.JFrame {
     ObjectOutputStream output;
     ObjectInputStream input;
     int port, totalClients=100;
+    String message;
+    static Server server;
     
     public Server() {
         initComponents();
@@ -29,7 +31,7 @@ public class Server extends javax.swing.JFrame {
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
     }
     
-    public void startRunning()
+    public void startRunning() throws ClassNotFoundException
     {
         try
         {
@@ -38,9 +40,9 @@ public class Server extends javax.swing.JFrame {
             {
                 try
                 {
-                    serverDisplay.append("\n  Waiting for Someone to Connect...");
+                    serverDisplay.setText(serverDisplay.getText()+"\n  Waiting for Someone to Connect...");
                     cs=s.accept();
-                    serverDisplay.append("\n  Connected to "+cs.getInetAddress().getHostName());
+                    serverDisplay.setText(serverDisplay.getText()+"\n  Connected to "+cs.getInetAddress().getHostName());
                     output = new ObjectOutputStream(cs.getOutputStream());
                     output.flush();
                     input = new ObjectInputStream(cs.getInputStream());
@@ -57,66 +59,59 @@ public class Server extends javax.swing.JFrame {
         }
     }
 
-    public void whileChatting() throws IOException
+    public void whileChatting() throws IOException, ClassNotFoundException
     {
-        String message="";
-        do{
-            try
-            {
-//                Object o = input.readObject();
-//                if("String".equals(typeof(o))){
-                    message = (String) input.readObject();
-                    serverDisplay.append("\n  "+message);
-//                }
-//                else{
-//                    BufferedImage image = ImageIO.read(cs.getInputStream());
-//                    serverDisplay.append("\n  Client: ");
-//                    serverDisplay.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
-//                }
-            }catch(ClassNotFoundException classNotFoundException){ }
-        }while(!message.equals("Client: END"));
+      do{
+          Object o = input.readObject();
+          if("String".equals(o.getClass().getSimpleName())){
+              message = (String) input.readObject();
+              serverDisplay.setText(serverDisplay.getText()+"\n  Client: "+message);
+          }
+          else{
+              BufferedImage image = (BufferedImage)input.readObject();
+              serverDisplay.setText(serverDisplay.getText()+("\n  Client:"));
+              serverDisplay.add(new JLabel((Icon) image));
+          }
+      }while(!message.equals("Client: END"));
     }
     
     public void sendMessage(String message)
     {
         try
         {
-            output.writeObject("Server: " + message);
+            output.writeObject(message);
             output.flush();
-            serverDisplay.append("\n  Server: "+message);
+            serverDisplay.setText(serverDisplay.getText()+"\n  Server: "+message);
         }
         catch(IOException ioException)
         {
-            serverDisplay.append("\n  Unable to Send Message");
+            serverDisplay.setText(serverDisplay.getText()+"\n  Unable to Send Message");
         }
     }
     
     public void sendImage() throws IOException{
-        ImageIO.write(EncryptionPanel.img, "PNG", cs.getOutputStream());
+        output.writeObject(EncryptionPanel.img);
+        output.flush();
+        serverDisplay.setText(serverDisplay.getText()+"\n  Server: ");
+        serverDisplay.add(new JLabel((Icon) EncryptionPanel.img));
+//        ImageIO.write(EncryptionPanel.img, "PNG", cs.getOutputStream());
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        serverDisplay = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         serverText = new javax.swing.JTextArea();
         jButton6 = new javax.swing.JButton();
         serverSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        serverDisplay = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
-
-        serverDisplay.setBackground(new java.awt.Color(246, 245, 245));
-        serverDisplay.setColumns(20);
-        serverDisplay.setRows(5);
-        serverDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        serverDisplay.setEnabled(false);
-        jScrollPane1.setViewportView(serverDisplay);
 
         serverText.setColumns(20);
         serverText.setRows(5);
@@ -146,6 +141,8 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(serverDisplay);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,6 +150,7 @@ public class Server extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -164,11 +162,6 @@ public class Server extends javax.swing.JFrame {
                             .addComponent(serverSend, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,19 +169,16 @@ public class Server extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(serverSend))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                    .addGap(71, 71, 71)))
         );
 
         pack();
@@ -216,10 +206,10 @@ public class Server extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JFrame("Message"), "Server not started yet.");  
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    public static void main(String[] args) 
+   
+    public static void main(String[] args) throws ClassNotFoundException 
     {
-        Server server=new Server();
+        server=new Server();
         server.startRunning();
     }
     
@@ -229,7 +219,7 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea serverDisplay;
+    private javax.swing.JEditorPane serverDisplay;
     private javax.swing.JButton serverSend;
     private javax.swing.JTextArea serverText;
     // End of variables declaration//GEN-END:variables

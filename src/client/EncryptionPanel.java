@@ -1,5 +1,6 @@
 package client;
 
+import static client.Client.client;
 import static client.MethodsUsed.*;
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -292,7 +293,8 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
        try {
-            new Client().sendImage();
+            client.sendImage();
+            setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

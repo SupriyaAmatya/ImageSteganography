@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static server.Server.server;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -291,7 +292,8 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         try {
-            new Server().sendImage();
+            server.sendImage();
+            setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

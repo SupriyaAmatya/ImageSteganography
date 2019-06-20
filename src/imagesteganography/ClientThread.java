@@ -1,10 +1,11 @@
 package imagesteganography;
 
-import server.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientThread extends Thread{
     @Override
     public void run(){
-        Server server = new server.Server();
+        new client.Client();
     }
 }

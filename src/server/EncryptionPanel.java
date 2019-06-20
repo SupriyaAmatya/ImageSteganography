@@ -291,6 +291,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+//        server.sendMessage("Hello");
         try {
             server.sendImage();
             setVisible(false);

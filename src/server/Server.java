@@ -19,23 +19,19 @@ public class Server extends javax.swing.JFrame {
     Socket cs;
     ObjectOutputStream output;
     ObjectInputStream input;
-    int port, totalClients=100;
+    int port;
     String message;
     static Server server;
     
-    public Server() {
+    public Server() throws ClassNotFoundException{
         initComponents();
         setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
-    }
-    
-    public void startRunning() throws ClassNotFoundException
-    {
         try
         {
-            s=new ServerSocket(port, totalClients);
+            s=new ServerSocket(port, 10);
             while(true)
             {
                 try
@@ -48,31 +44,32 @@ public class Server extends javax.swing.JFrame {
                     input = new ObjectInputStream(cs.getInputStream());
                     whileChatting();
                 }catch(EOFException eofException){
-                    JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
-                    setVisible(false);
+                    JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Couldn't locate Client.");
                 }
             }
         }
-        catch(IOException ioException)
+        catch(Exception e)
         {
-            ioException.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
+            setVisible(false);
+            e.printStackTrace();
         }
     }
 
     public void whileChatting() throws IOException, ClassNotFoundException
     {
-      do{
-          Object o = input.readObject();
-          if("String".equals(o.getClass().getSimpleName())){
+      while(true){
+//          Object o = input.readObject();
+//          if("String".equals(o.getClass().getSimpleName())){
               message = (String) input.readObject();
               serverDisplay.setText(serverDisplay.getText()+"\n  Client: "+message);
-          }
-          else{
-              BufferedImage image = (BufferedImage)input.readObject();
-              serverDisplay.setText(serverDisplay.getText()+("\n  Client:"));
-              serverDisplay.add(new JLabel((Icon) image));
-          }
-      }while(!message.equals("Client: END"));
+//          }
+//          else{
+//              BufferedImage image = (BufferedImage)input.readObject();
+//              serverDisplay.setText(serverDisplay.getText()+("\n  Client:"));
+//              serverDisplay.add(new JLabel((Icon) image));
+//          }
+      }
     }
     
     public void sendMessage(String message)
@@ -141,6 +138,9 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
+        serverDisplay.setBackground(new java.awt.Color(255, 255, 255));
+        serverDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        serverDisplay.setEnabled(false);
         jScrollPane1.setViewportView(serverDisplay);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,8 +196,8 @@ public class Server extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(s!=null){
             try{
+                this.dispose();
                 s.close();
-                setVisible(false);
                 JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,10 +207,9 @@ public class Server extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
    
-    public static void main(String[] args) throws ClassNotFoundException 
+    public static void main(String[] args) throws ClassNotFoundException, IOException 
     {
         server=new Server();
-        server.startRunning();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,11 +1,13 @@
 package imagesteganography;
 
 import client.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.*;
 
 public class Homepage extends javax.swing.JFrame {
-    static Server server;
-    static Client client;
+    //static Server server;
+    //static Client client;
     
     public Homepage() {
         initComponents();
@@ -83,11 +85,11 @@ public class Homepage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new ClientThread().start();
+        new ServerThread().start();       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        new ServerThread().start();
+        new ClientThread().start();
     }//GEN-LAST:event_jButton9ActionPerformed
     
     public static void main(String args[]) {

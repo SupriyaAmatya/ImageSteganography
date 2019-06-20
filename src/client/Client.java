@@ -32,17 +32,16 @@ public class Client extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
-    }
-   
-    public void startRunning()
-    {
-       try
+        try
        {
             clientDisplay.setText(clientDisplay.getText()+"\n  Attempting Connection ...");
             try
             {
                 con = new Socket(InetAddress.getByName(serverIP),port);
-            }catch(IOException e){ }
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not connect to Server.");
+                setVisible(false);
+            }
             
             clientDisplay.setText(clientDisplay.getText()+"\n  Connected to: " + con.getInetAddress().getHostName());
             output = new ObjectOutputStream(con.getOutputStream());
@@ -52,26 +51,24 @@ public class Client extends javax.swing.JFrame {
        }
        catch(Exception e)
        {
-           JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not connect to Server.");
-           setVisible(false);
            e.printStackTrace();
        }
     }
-    
+   
     private void whileChatting() throws IOException, ClassNotFoundException
     {
-      do{
-          Object o = input.readObject();
-          if("String".equals(o.getClass().getSimpleName())){
+      while(true){
+//          Object o = input.readObject();
+//          if("String".equals(o.getClass().getSimpleName())){
               message = (String) input.readObject();
               clientDisplay.setText(clientDisplay.getText()+"\n  Server: "+message);
-          }
-          else{
-              BufferedImage image = (BufferedImage) input.readObject();
-              clientDisplay.setText(clientDisplay.getText()+("\n  Server"));
-              clientDisplay.add(new JLabel((Icon) image));
-          }
-      }while(!message.equals("Server: END"));
+//          }
+//          else{
+//              BufferedImage image = (BufferedImage) input.readObject();
+//              clientDisplay.setText(clientDisplay.getText()+("\n  Server"));
+//              clientDisplay.add(new JLabel((Icon) image));
+//          }
+      }
     }
     
     private void sendMessage(String message)
@@ -140,6 +137,9 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        clientDisplay.setBackground(new java.awt.Color(255, 255, 255));
+        clientDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        clientDisplay.setEnabled(false);
         jScrollPane1.setViewportView(clientDisplay);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,8 +200,8 @@ public class Client extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         try{
+            this.dispose();
             con.close();
-            setVisible(false);
             JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(new JFrame("Message"), "Connection not established yet.");
@@ -211,7 +211,6 @@ public class Client extends javax.swing.JFrame {
     public static void main(String[] args) throws ClassNotFoundException 
     {
         client=new Client();
-        client.startRunning();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

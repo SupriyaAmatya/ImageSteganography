@@ -10,14 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EncryptionPanel extends javax.swing.JPanel{
@@ -36,6 +39,51 @@ public class EncryptionPanel extends javax.swing.JPanel{
         sendButton.setVisible(false);
         saveButton.setVisible(false);   
     }
+    
+    class ExtensionFileFilter extends FileFilter {
+            String description;
+
+            String extensions[];
+
+            public ExtensionFileFilter(String description, String extension) {
+              this(description, new String[] { extension });
+            }
+
+            public ExtensionFileFilter(String description, String extensions[]) {
+              if (description == null) {
+                this.description = extensions[0];
+              } else {
+                this.description = description;
+              }
+              this.extensions = (String[]) extensions.clone();
+              toLower(this.extensions);
+            }
+            
+            private void toLower(String array[]) {
+                for (int i = 0, n = array.length; i < n; i++) {
+                  array[i] = array[i].toLowerCase();
+                }
+              }
+
+              public String getDescription() {
+                return description;
+              }
+
+              public boolean accept(File file) {
+                if (file.isDirectory()) {
+                  return true;
+                } else {
+                  String path = file.getAbsolutePath().toLowerCase();
+                  for (int i = 0, n = extensions.length; i < n; i++) {
+                    String extension = extensions[i];
+                    if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) {
+                      return true;
+                    }
+                  }
+                }
+                return false;
+              }
+        }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -206,12 +254,20 @@ public class EncryptionPanel extends javax.swing.JPanel{
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        imageChooser = new JFileChooser();
-        int result = imageChooser.showOpenDialog(this);
-        imageFile = imageChooser.getSelectedFile();
-        imageTextField.setText(imageFile.getAbsolutePath());
-        imageChooser.setFileFilter(new FileNameExtensionFilter("*.Image","jpg","jpeg","png" ));
-       
+        
+        imageChooser = new JFileChooser(".");
+        FileFilter filter1 = new ExtensionFileFilter("Image file(png,jpg,jpeg)", new String[] { "JPG", "JPEG", "PNG" });
+        imageChooser.setFileFilter(filter1);
+        int status = imageChooser.showOpenDialog(null);
+        if (status == JFileChooser.APPROVE_OPTION) {
+          File selectedFile = imageChooser.getSelectedFile();
+          System.out.println(selectedFile.getParent());
+          System.out.println(selectedFile.getName());
+        } else if (status == JFileChooser.CANCEL_OPTION) {
+          System.out.println(JFileChooser.CANCEL_OPTION);
+        }
+        int result = 0;
+        
         //Display original image
         if(result == JFileChooser.APPROVE_OPTION){
             try {   
@@ -259,9 +315,10 @@ public class EncryptionPanel extends javax.swing.JPanel{
         else if(rb2.isSelected()== true){
             textFileChooser = new JFileChooser();
             textFileChooser.showOpenDialog(this);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+            textFileChooser.setFileFilter(filter);
             StringBuilder msg = new StringBuilder("");
             try {
-                //textFile = textFileChooser.getSelectedFile();
                 FileInputStream fi = new FileInputStream(textFileChooser.getSelectedFile());
                 int i;
                 while((i=fi.read())!= -1){
@@ -311,6 +368,24 @@ public class EncryptionPanel extends javax.swing.JPanel{
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+       
+//        saveFileChooser.setFileFilter(new FileNameExtensionFilter("JPEG File", "jpg"));
+//        if(saveFileChooser.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
+//            String name = saveFileChooser.getSelectedFile().getAbsolutePath();
+//            String name1 = saveFileChooser.getFileFilter().getDescription();
+//            if (name1.equals("JPEG File")){
+//                String ext = ".jpg";
+//                name = name + ext;
+//                System.out.println(name);
+//            }
+//            File embedFile = saveFileChooser.getSelectedFile();
+//            try {
+//                ImageIO.write(im, "jpg", embedFile);
+//            } catch (IOException ex) {
+//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

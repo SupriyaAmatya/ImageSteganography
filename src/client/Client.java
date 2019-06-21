@@ -137,7 +137,6 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        clientDisplay.setBackground(new java.awt.Color(255, 255, 255));
         clientDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         clientDisplay.setEnabled(false);
         jScrollPane1.setViewportView(clientDisplay);

@@ -1,6 +1,7 @@
 package imagesteganography;
 
 import static imagesteganography.StartProgram.layeredPane;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -8,8 +9,10 @@ import java.net.URLConnection;
 import java.security.Key;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 public class MethodsUsed {
+    
     public static void switchPanels(JPanel panel){
         layeredPane.removeAll();
         layeredPane.add(panel);

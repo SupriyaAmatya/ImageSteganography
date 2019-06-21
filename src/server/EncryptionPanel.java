@@ -1,6 +1,6 @@
 package server;
 
-import static server.MethodsUsed.*;
+import static imagesteganography.MethodsUsed.*;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Window;
@@ -291,13 +291,13 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-//        server.sendMessage("Hello");
-        try {
-            server.sendImage();
-            setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        server.sendMessage("Hello");
+//        try {
+//            server.sendImage();
+//            setVisible(false);
+//        } catch (IOException ex) {
+//            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

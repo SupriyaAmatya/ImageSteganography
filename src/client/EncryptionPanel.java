@@ -1,7 +1,8 @@
 package client;
 
 import static client.Client.client;
-import static client.MethodsUsed.*;
+import imagesteganography.ExtensionFileFilter;
+import static imagesteganography.MethodsUsed.*;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Window;
@@ -21,7 +22,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -32,6 +32,50 @@ public class EncryptionPanel extends javax.swing.JPanel{
     static JScrollPane coverImgPane;
     static BufferedImage img;
     
+    public class ExtensionFileFilter{
+    String description;
+    String extensions[];
+
+    public ExtensionFileFilter(String description, String extension) {
+        this(description, new String[] { extension });
+    }
+
+    public ExtensionFileFilter(String description, String extensions[]) {
+        if (description == null) {
+          this.description = extensions[0];
+        } else {
+          this.description = description;
+        }
+        this.extensions = (String[]) extensions.clone();
+        toLower(this.extensions);
+    }
+
+    private void toLower(String array[]) {
+        for (int i = 0, n = array.length; i < n; i++) {
+          array[i] = array[i].toLowerCase();
+        }
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean accept(File file) {
+        if (file.isDirectory()) {
+          return true;
+        } else {
+          String path = file.getAbsolutePath().toLowerCase();
+          for (int i = 0, n = extensions.length; i < n; i++) {
+            String extension = extensions[i];
+            if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) {
+              return true;
+            }
+          }
+        }
+        return false;
+    }
+    }
+    
     public EncryptionPanel() {
         initComponents();
         originalImagePane.setVisible(false);
@@ -39,51 +83,6 @@ public class EncryptionPanel extends javax.swing.JPanel{
         sendButton.setVisible(false);
         saveButton.setVisible(false);   
     }
-    
-    class ExtensionFileFilter extends FileFilter {
-            String description;
-
-            String extensions[];
-
-            public ExtensionFileFilter(String description, String extension) {
-              this(description, new String[] { extension });
-            }
-
-            public ExtensionFileFilter(String description, String extensions[]) {
-              if (description == null) {
-                this.description = extensions[0];
-              } else {
-                this.description = description;
-              }
-              this.extensions = (String[]) extensions.clone();
-              toLower(this.extensions);
-            }
-            
-            private void toLower(String array[]) {
-                for (int i = 0, n = array.length; i < n; i++) {
-                  array[i] = array[i].toLowerCase();
-                }
-              }
-
-              public String getDescription() {
-                return description;
-              }
-
-              public boolean accept(File file) {
-                if (file.isDirectory()) {
-                  return true;
-                } else {
-                  String path = file.getAbsolutePath().toLowerCase();
-                  for (int i = 0, n = extensions.length; i < n; i++) {
-                    String extension = extensions[i];
-                    if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) {
-                      return true;
-                    }
-                  }
-                }
-                return false;
-              }
-        }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -256,7 +255,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         }
         
         imageChooser = new JFileChooser(".");
-        FileFilter filter1 = new ExtensionFileFilter("Image file(png,jpg,jpeg)", new String[] { "JPG", "JPEG", "PNG" });
+        FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg)", new String[] { "JPG", "JPEG", "PNG" });
         imageChooser.setFileFilter(filter1);
         int status = imageChooser.showOpenDialog(null);
         if (status == JFileChooser.APPROVE_OPTION) {
@@ -314,9 +313,9 @@ public class EncryptionPanel extends javax.swing.JPanel{
         //for text file
         else if(rb2.isSelected()== true){
             textFileChooser = new JFileChooser();
-            textFileChooser.showOpenDialog(this);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+            FileFilter filter = new ExtensionFileFilter("Text Files (.txt)", new String [] {"txt"});
             textFileChooser.setFileFilter(filter);
+            textFileChooser.showOpenDialog(this);
             StringBuilder msg = new StringBuilder("");
             try {
                 FileInputStream fi = new FileInputStream(textFileChooser.getSelectedFile());
@@ -349,12 +348,13 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        try {
-            client.sendImage();
-            setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        client.sendMessage("Hello");
+//        try {
+//            client.sendImage();
+//            setVisible(false);
+//        } catch (IOException ex) {
+//            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

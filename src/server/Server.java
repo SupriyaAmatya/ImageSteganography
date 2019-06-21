@@ -26,7 +26,7 @@ public class Server extends javax.swing.JFrame {
     public Server() throws ClassNotFoundException{
         initComponents();
         setLocationRelativeTo(null);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
         try
@@ -44,15 +44,14 @@ public class Server extends javax.swing.JFrame {
                     input = new ObjectInputStream(cs.getInputStream());
                     whileChatting();
                 }catch(EOFException eofException){
-                    JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Couldn't locate Client.");
+                    serverDisplay.setText(serverDisplay.getText()+"\n  Connection to client lost.\n");
                 }
             }
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
+        } catch (IOException ex) {
+            if(s==null)
+                JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
             setVisible(false);
-            e.printStackTrace();
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -194,17 +193,14 @@ public class Server extends javax.swing.JFrame {
     }//GEN-LAST:event_serverSendActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(s!=null){
-            try{
-                this.dispose();
-                s.close();
-                JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
+        try{
+            cs.close();
+            s.close();
+            this.dispose();
+            JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-            JOptionPane.showMessageDialog(new JFrame("Message"), "Server not started yet.");  
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
    
     public static void main(String[] args) throws ClassNotFoundException, IOException 

@@ -29,11 +29,11 @@ public class Client extends javax.swing.JFrame {
     public Client(){
         initComponents();
         setLocationRelativeTo(null);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
         try
-       {
+        {
             clientDisplay.setText(clientDisplay.getText()+"\n  Attempting Connection ...");
             try
             {
@@ -55,7 +55,7 @@ public class Client extends javax.swing.JFrame {
        }
     }
    
-    private void whileChatting() throws IOException, ClassNotFoundException
+    public void whileChatting() throws IOException, ClassNotFoundException
     {
       while(true){
 //          Object o = input.readObject();
@@ -71,7 +71,7 @@ public class Client extends javax.swing.JFrame {
       }
     }
     
-    private void sendMessage(String message)
+    public void sendMessage(String message)
     {
         try
         {
@@ -199,8 +199,8 @@ public class Client extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         try{
-            this.dispose();
             con.close();
+            this.dispose();
             JOptionPane.showMessageDialog(new JFrame("Message"), "Connection to server closed.");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(new JFrame("Message"), "Connection not established yet.");

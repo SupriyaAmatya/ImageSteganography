@@ -1,8 +1,7 @@
 package client;
 
 import Decoder.BASE64Encoder;
-import static imagesteganography.MethodsUsed.ToBinary;
-import static imagesteganography.MethodsUsed.keyGeneration;
+import static imagesteganography.MethodsUsed.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;

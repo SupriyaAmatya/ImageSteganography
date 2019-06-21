@@ -19,7 +19,7 @@ public class MainDialog extends javax.swing.JDialog {
         setResizable(false);
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton1.setText("Start ");
+        jButton1.setText("Start Program Normally ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

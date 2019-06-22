@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 
-class Encode {
+public class Encode {
 
     public static BufferedImage encrypt(String message, String key) throws Exception{
         Key k = keyGeneration(key);

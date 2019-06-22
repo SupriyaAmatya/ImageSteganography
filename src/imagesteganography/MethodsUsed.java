@@ -54,4 +54,12 @@ public class MethodsUsed {
             }catch (IOException ex) { }
         return 0;
     }
+    
+    public static boolean validateName(String s) {
+        if(s.endsWith(".jpg")) return false;
+        else if(s.endsWith(".png")) return false;
+        else if(s.endsWith(".jpeg")) return false;
+        else if(s.endsWith(".bmp")) return false;
+        else return true;
+    }
 }

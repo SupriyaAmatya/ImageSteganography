@@ -78,10 +78,8 @@ public class Server extends javax.swing.JFrame {
             output.writeObject(message);
             output.flush();
             serverDisplay.setText(serverDisplay.getText()+"\n  Server: "+message);
-        }
-        catch(IOException ioException)
-        {
-            serverDisplay.setText(serverDisplay.getText()+"\n  Unable to Send Message");
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -188,19 +186,24 @@ public class Server extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void serverSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverSendActionPerformed
-        sendMessage(serverText.getText());
-	serverText.setText("");
+        try{
+            sendMessage(serverText.getText());
+            serverText.setText("");
+        }catch (Exception e){
+            serverDisplay.setText(serverDisplay.getText()+"\n  Unable to Send Message");
+        }
     }//GEN-LAST:event_serverSendActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try{
             cs.close();
             s.close();
-            this.dispose();
-            JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } finally{
+                this.dispose();
+                JOptionPane.showMessageDialog(new JFrame("Message"), "Server closed.");
+            }   
     }//GEN-LAST:event_jButton2ActionPerformed
    
     public static void main(String[] args) throws ClassNotFoundException, IOException 

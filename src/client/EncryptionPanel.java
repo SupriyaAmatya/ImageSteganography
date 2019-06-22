@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import imagesteganography.Encode;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -32,56 +33,23 @@ public class EncryptionPanel extends javax.swing.JPanel{
     static JScrollPane coverImgPane;
     static BufferedImage img;
     
-    public class ExtensionFileFilter{
-    String description;
-    String extensions[];
-
-    public ExtensionFileFilter(String description, String extension) {
-        this(description, new String[] { extension });
-    }
-
-    public ExtensionFileFilter(String description, String extensions[]) {
-        if (description == null) {
-          this.description = extensions[0];
-        } else {
-          this.description = description;
-        }
-        this.extensions = (String[]) extensions.clone();
-        toLower(this.extensions);
-    }
-
-    private void toLower(String array[]) {
-        for (int i = 0, n = array.length; i < n; i++) {
-          array[i] = array[i].toLowerCase();
-        }
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean accept(File file) {
-        if (file.isDirectory()) {
-          return true;
-        } else {
-          String path = file.getAbsolutePath().toLowerCase();
-          for (int i = 0, n = extensions.length; i < n; i++) {
-            String extension = extensions[i];
-            if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) {
-              return true;
-            }
-          }
-        }
-        return false;
-    }
-    }
-    
     public EncryptionPanel() {
         initComponents();
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
         sendButton.setVisible(false);
         saveButton.setVisible(false);   
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }       
     }
     
     @SuppressWarnings("unchecked")
@@ -242,20 +210,8 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_keyButtonActionPerformed
 
     private void imageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageButtonActionPerformed
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         imageChooser = new JFileChooser(".");
-        FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg)", new String[] { "JPG", "JPEG", "PNG" });
+        FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" });
         imageChooser.setFileFilter(filter1);
         int status = imageChooser.showOpenDialog(null);
         if (status == JFileChooser.APPROVE_OPTION) {
@@ -360,34 +316,24 @@ public class EncryptionPanel extends javax.swing.JPanel{
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         RenderedImage im = (RenderedImage) img;
         saveFileChooser = new JFileChooser("Save File");
+        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp))", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File embedFile = saveFileChooser.getSelectedFile();
+            File file = saveFileChooser.getSelectedFile();
+            String filename = file.getName().toLowerCase();
+            if (file == null) {
+              return;
+            }
+            else if(validateName(filename)){
+              file = new File(file.getParentFile(), file.getName() + ".jpg");
+            }
             try {
-                ImageIO.write(im, "png", embedFile);
+                ImageIO.write(im, "jpg", file);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-       
-//        saveFileChooser.setFileFilter(new FileNameExtensionFilter("JPEG File", "jpg"));
-//        if(saveFileChooser.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
-//            String name = saveFileChooser.getSelectedFile().getAbsolutePath();
-//            String name1 = saveFileChooser.getFileFilter().getDescription();
-//            if (name1.equals("JPEG File")){
-//                String ext = ".jpg";
-//                name = name + ext;
-//                System.out.println(name);
-//            }
-//            File embedFile = saveFileChooser.getSelectedFile();
-//            try {
-//                ImageIO.write(im, "jpg", embedFile);
-//            } catch (IOException ex) {
-//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//        }
     }//GEN-LAST:event_saveButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;

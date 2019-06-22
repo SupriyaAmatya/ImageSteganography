@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class DecryptionPanel extends javax.swing.JPanel {
@@ -29,6 +30,17 @@ public class DecryptionPanel extends javax.swing.JPanel {
         stegoImagePane.setVisible(false);
         messagePane.setVisible(false);
         saveFileButton.setVisible(false);
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -153,19 +165,9 @@ public class DecryptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_decodeButtonActionPerformed
 
     private void coverImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverImageButtonActionPerformed
-       try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
         imageChooser = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" });
+        imageChooser.setFileFilter(filter1);
         int result = imageChooser.showOpenDialog(this);
         File imageFile = imageChooser.getSelectedFile();
         imageTextField.setText(imageFile.getAbsolutePath());
@@ -185,10 +187,18 @@ public class DecryptionPanel extends javax.swing.JPanel {
     private void saveFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileButtonActionPerformed
         String originalMessage = messageArea.getText();
         saveFileChooser = new JFileChooser("Save File");
+        saveFileChooser.setFileFilter(new ExtensionFileFilter("Text File (.txt)", "txt"));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = saveFileChooser.getSelectedFile();
+            if (file == null) {
+              return;
+            }
+            else if (!file.getName().toLowerCase().endsWith(".txt")){
+              file = new File(file.getParentFile(), file.getName() + ".txt");
+            }
             try {
                 FileWriter saveFile;
-                saveFile = new FileWriter(saveFileChooser.getSelectedFile());
+                saveFile = new FileWriter(file);
                 saveFile.write(originalMessage);
                 saveFile.close();
             } catch (IOException ex) {

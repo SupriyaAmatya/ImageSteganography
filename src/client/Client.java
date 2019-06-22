@@ -79,8 +79,7 @@ public class Client extends javax.swing.JFrame {
             output.flush();
             clientDisplay.setText(clientDisplay.getText()+"\n  Client: "+message);
         }
-        catch(IOException ioException)
-        {
+        catch(IOException ioException){ 
             clientDisplay.setText(clientDisplay.getText()+"\n  Unable to Send Message.");
         }
     }

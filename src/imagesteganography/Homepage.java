@@ -25,6 +25,7 @@ public class Homepage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Create Connection");
         setResizable(false);
 
         jButton1.setText("Start Server");

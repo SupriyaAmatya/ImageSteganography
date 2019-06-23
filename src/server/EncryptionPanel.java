@@ -1,4 +1,4 @@
-package server;
+package server; 
 
 import imagesteganography.ExtensionFileFilter;
 import static imagesteganography.MethodsUsed.*;
@@ -18,8 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import imagesteganography.Encode;
+import static server.Server.server;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -30,11 +29,11 @@ public class EncryptionPanel extends javax.swing.JPanel{
     static JScrollPane coverImgPane;
     static BufferedImage img;
     
-    public EncryptionPanel() {       
+    public EncryptionPanel() {
         initComponents();
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
-        sendButton.setVisible(false);
+//        sendButton.setVisible(false);
         saveButton.setVisible(false); 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -79,6 +78,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         imageTextField.setBackground(new java.awt.Color(240, 240, 240));
         imageTextField.setText("Load Image ");
+        imageTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         imageTextField.setEnabled(false);
         imageTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
         add(imageTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 420, 30));
@@ -107,6 +107,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         keyTextField.setBackground(new java.awt.Color(240, 240, 240));
         keyTextField.setText("Enter secret key (upto 16 characters)");
+        keyTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         keyTextField.setEnabled(false);
         keyTextField.setSelectedTextColor(new java.awt.Color(102, 102, 102));
         keyTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
@@ -172,6 +173,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         buttonGroup.add(rb1);
         rb1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         rb1.setForeground(new java.awt.Color(8, 177, 206));
+        rb1.setSelected(true);
         rb1.setText("Enter Text");
         rb1.setIconTextGap(10);
         add(rb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 110, 30));
@@ -213,7 +215,6 @@ public class EncryptionPanel extends javax.swing.JPanel{
         int result = imageChooser.showOpenDialog(this);
         imageFile = imageChooser.getSelectedFile();
         imageTextField.setText(imageFile.getAbsolutePath());
-        imageChooser.setFileFilter(new FileNameExtensionFilter("*.Image","jpg","jpeg","png" ));
        
         //Display original image
         if(result == JFileChooser.APPROVE_OPTION){
@@ -296,13 +297,8 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        Server.server.sendMessage("Hello");
-//        try {
-//            server.sendImage();
-//            setVisible(false);
-//        } catch (IOException ex) {
-//            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        server.sendImage(img);
+        setVisible(false);
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

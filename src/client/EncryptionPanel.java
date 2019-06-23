@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import imagesteganography.Encode;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -82,6 +81,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         imageTextField.setBackground(new java.awt.Color(240, 240, 240));
         imageTextField.setText("Load Image ");
+        imageTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         imageTextField.setEnabled(false);
         imageTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
         add(imageTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 420, 30));
@@ -110,6 +110,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         keyTextField.setBackground(new java.awt.Color(240, 240, 240));
         keyTextField.setText("Enter secret key (upto 16 characters)");
+        keyTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         keyTextField.setEnabled(false);
         keyTextField.setSelectedTextColor(new java.awt.Color(102, 102, 102));
         keyTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
@@ -175,6 +176,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         buttonGroup.add(rb1);
         rb1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         rb1.setForeground(new java.awt.Color(8, 177, 206));
+        rb1.setSelected(true);
         rb1.setText("Enter Text");
         rb1.setIconTextGap(10);
         add(rb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 110, 30));
@@ -210,19 +212,13 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_keyButtonActionPerformed
 
     private void imageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageButtonActionPerformed
-        imageChooser = new JFileChooser(".");
+        imageChooser = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" });
         imageChooser.setFileFilter(filter1);
-        int status = imageChooser.showOpenDialog(null);
-        if (status == JFileChooser.APPROVE_OPTION) {
-          File selectedFile = imageChooser.getSelectedFile();
-          System.out.println(selectedFile.getParent());
-          System.out.println(selectedFile.getName());
-        } else if (status == JFileChooser.CANCEL_OPTION) {
-          System.out.println(JFileChooser.CANCEL_OPTION);
-        }
-        int result = 0;
-        
+        int result = imageChooser.showOpenDialog(this);
+        imageFile = imageChooser.getSelectedFile();
+        imageTextField.setText(imageFile.getAbsolutePath());
+       
         //Display original image
         if(result == JFileChooser.APPROVE_OPTION){
             try {   
@@ -299,11 +295,13 @@ public class EncryptionPanel extends javax.swing.JPanel{
             sendButton.setVisible(true);
             saveButton.setVisible(true);
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please enter/re-check all input data.");
         }
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        System.out.println("here");
         client.sendMessage("Hello");
 //        try {
 //            client.sendImage();

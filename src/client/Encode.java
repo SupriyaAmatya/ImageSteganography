@@ -1,7 +1,7 @@
-package imagesteganography;
+package client;
 
 import Decoder.BASE64Encoder;
-import static imagesteganography.EncryptionPanel.imageChooser;
+import static client.EncryptionPanel.imageChooser;
 import static imagesteganography.MethodsUsed.ToBinary;
 import static imagesteganography.MethodsUsed.keyGeneration;
 import java.awt.Color;

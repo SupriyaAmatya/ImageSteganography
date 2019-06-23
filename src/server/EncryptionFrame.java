@@ -2,7 +2,7 @@ package server;
 
 import javax.swing.JFrame;
 
-public class EncryptionFrame {
+public class EncryptionFrame{
     JFrame frame;
     EncryptionPanel encryptionPanel;
     EncryptionFrame(){

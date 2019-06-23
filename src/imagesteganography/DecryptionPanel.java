@@ -87,11 +87,13 @@ public class DecryptionPanel extends javax.swing.JPanel {
 
         keyField.setForeground(new java.awt.Color(137, 137, 137));
         keyField.setText("Enter Secret Key");
+        keyField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         keyField.setEnabled(false);
         add(keyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 420, 30));
 
         imageTextField.setForeground(new java.awt.Color(137, 137, 137));
         imageTextField.setText("Load Stego Image");
+        imageTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         imageTextField.setEnabled(false);
         add(imageTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 420, 30));
 

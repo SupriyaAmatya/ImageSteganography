@@ -81,6 +81,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         imageTextField.setBackground(new java.awt.Color(240, 240, 240));
         imageTextField.setText("Load Image ");
+        imageTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         imageTextField.setEnabled(false);
         imageTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
         add(imageTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 420, 30));
@@ -109,6 +110,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         keyTextField.setBackground(new java.awt.Color(240, 240, 240));
         keyTextField.setText("Enter secret key (upto 16 characters)");
+        keyTextField.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         keyTextField.setEnabled(false);
         keyTextField.setSelectedTextColor(new java.awt.Color(102, 102, 102));
         keyTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
@@ -188,6 +190,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         buttonGroup.add(rb1);
         rb1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         rb1.setForeground(new java.awt.Color(8, 177, 206));
+        rb1.setSelected(true);
         rb1.setText("Enter Text");
         rb1.setIconTextGap(10);
         add(rb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 110, 30));
@@ -236,7 +239,6 @@ public class EncryptionPanel extends javax.swing.JPanel{
         int result = imageChooser.showOpenDialog(this);
         imageFile = imageChooser.getSelectedFile();
         imageTextField.setText(imageFile.getAbsolutePath());
-        imageChooser.setFileFilter(new FileNameExtensionFilter("*.Image","jpg","jpeg","png" ));
        
         //Display original image
         if(result == JFileChooser.APPROVE_OPTION){
@@ -277,8 +279,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             dialog.getContentPane().add(BorderLayout.SOUTH,b);
             dialog.setSize(400, 400);
             dialog.setLocationRelativeTo(parentFrame);
-            dialog.setVisible(true);
-            
+            dialog.setVisible(true);            
         }
         
         //for text file
@@ -301,8 +302,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println(msg.toString());
-            message = msg.toString();
-            
+            message = msg.toString();     
         }
     }//GEN-LAST:event_fileButtonActionPerformed
 
@@ -315,6 +315,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             sendButton.setVisible(true);
             saveButton.setVisible(true);
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please enter/re-check all input data.");
         }
     }//GEN-LAST:event_embedButtonActionPerformed

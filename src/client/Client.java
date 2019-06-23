@@ -28,7 +28,7 @@ public class Client extends javax.swing.JFrame {
     
     public Client(){
         initComponents();
-        setLocationRelativeTo(null);
+//        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
@@ -107,9 +107,12 @@ public class Client extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client");
+        setLocation(new java.awt.Point(685, 50));
 
         clientText.setColumns(20);
+        clientText.setLineWrap(true);
         clientText.setRows(5);
+        clientText.setWrapStyleWord(true);
         jScrollPane6.setViewportView(clientText);
 
         jButton11.setText("Encrypt");

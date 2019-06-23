@@ -1,6 +1,7 @@
 package server;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.EOFException;
 import java.io.IOException;
@@ -14,9 +15,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 //import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
-public class Server extends javax.swing.JFrame {
-    ServerSocket s;
-    Socket cs;
+public class Server extends JFrame{
+    static ServerSocket s;
+    static Socket cs;
     ObjectOutputStream output;
     ObjectInputStream input;
     int port;
@@ -25,7 +26,7 @@ public class Server extends javax.swing.JFrame {
     
     public Server() throws ClassNotFoundException{
         initComponents();
-        setLocationRelativeTo(null);
+//        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
@@ -83,11 +84,12 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
-    public void sendImage() throws IOException{
-        output.writeObject(EncryptionPanel.img);
-        output.flush();
-        serverDisplay.setText(serverDisplay.getText()+"\n  Server: ");
-        serverDisplay.add(new JLabel((Icon) EncryptionPanel.img));
+    public void sendImage(BufferedImage img){
+        System.out.print("dfg");
+//        output.writeObject(image);
+//        output.flush();
+//        serverDisplay.setText(serverDisplay.getText()+"\n  Server: ");
+//        serverDisplay.add(new JLabel((Icon) image));
 //        ImageIO.write(EncryptionPanel.img, "PNG", cs.getOutputStream());
     }
     
@@ -106,9 +108,12 @@ public class Server extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
+        setLocation(new java.awt.Point(50, 50));
 
         serverText.setColumns(20);
+        serverText.setLineWrap(true);
         serverText.setRows(5);
+        serverText.setWrapStyleWord(true);
         jScrollPane3.setViewportView(serverText);
 
         jButton6.setText("Encrypt");
@@ -135,7 +140,6 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
-        serverDisplay.setBackground(new java.awt.Color(255, 255, 255));
         serverDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         serverDisplay.setEnabled(false);
         jScrollPane1.setViewportView(serverDisplay);
@@ -182,7 +186,7 @@ public class Server extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        new EncryptionFrame();
+        EncryptionFrame encryptionFrame = new EncryptionFrame();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void serverSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverSendActionPerformed

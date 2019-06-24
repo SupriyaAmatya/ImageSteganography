@@ -1,5 +1,6 @@
-package imagesteganography;
+package client;
 
+import imagesteganography.*;
 import static imagesteganography.MethodsUsed.hideKey;
 import static imagesteganography.MethodsUsed.switchPanels;
 import java.awt.image.BufferedImage;
@@ -20,13 +21,16 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class DecryptionPanel extends javax.swing.JPanel {
-    BufferedImage sourceImage;
     static JFileChooser imageChooser, saveFileChooser;
     static String key;
+    BufferedImage image;
 
-    public DecryptionPanel() {
+    public DecryptionPanel(BufferedImage img) {
+        image = img;
         initComponents();
-        stegoImagePane.setVisible(false);
+        stegoImageLabel = new JLabel(new ImageIcon(img));
+        stegoImagePane.getViewport().add(stegoImageLabel);
+        stegoImagePane.setVisible(true);
         messagePane.setVisible(false);
         saveFileButton.setVisible(false);
         try {
@@ -56,7 +60,6 @@ public class DecryptionPanel extends javax.swing.JPanel {
         messageArea = new javax.swing.JTextArea();
         saveFileButton = new javax.swing.JButton();
         decodeButton = new javax.swing.JButton();
-        homeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 39, 45));
         setMaximumSize(new java.awt.Dimension(900, 650));
@@ -67,11 +70,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
         coverImageButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         coverImageButton.setText("Browse");
         coverImageButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        coverImageButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coverImageButtonActionPerformed(evt);
-            }
-        });
+        coverImageButton.setEnabled(false);
         add(coverImageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, 100, 30));
 
         keyButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -91,7 +90,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
         add(keyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 420, 30));
 
         imageTextField.setForeground(new java.awt.Color(137, 137, 137));
-        imageTextField.setText("Load Stego Image");
+        imageTextField.setText("Received Image Inserted");
         imageTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         imageTextField.setEnabled(false);
         add(imageTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 420, 30));
@@ -132,20 +131,6 @@ public class DecryptionPanel extends javax.swing.JPanel {
             }
         });
         add(decodeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 160, 30));
-
-        homeButton.setBackground(new java.awt.Color(0, 39, 45));
-        homeButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        homeButton.setForeground(new java.awt.Color(0, 39, 45));
-        homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconfinder_home_981080.png"))); // NOI18N
-        homeButton.setBorder(null);
-        homeButton.setBorderPainted(false);
-        homeButton.setOpaque(false);
-        homeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeButtonActionPerformed(evt);
-            }
-        });
-        add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 60, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void keyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyButtonActionPerformed
@@ -155,7 +140,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
 
     private void decodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeButtonActionPerformed
         try {
-            String message = Decode.extract(sourceImage);
+            String message = Decode.extract(image);
             messageArea.setText(message);
             messagePane.getViewport().add(messageArea);
             messagePane.setVisible(true);
@@ -164,26 +149,6 @@ public class DecryptionPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please re-check Stego Image and Key");
         }
     }//GEN-LAST:event_decodeButtonActionPerformed
-
-    private void coverImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverImageButtonActionPerformed
-        imageChooser = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter("Image files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" });
-        imageChooser.setFileFilter(filter1);
-        int result = imageChooser.showOpenDialog(this);
-        File imageFile = imageChooser.getSelectedFile();
-        imageTextField.setText(imageFile.getAbsolutePath());
-        imageChooser.setFileFilter(new FileNameExtensionFilter("*.Image","jpg","jpeg","png" ));
-        //Display original image
-        if(result == JFileChooser.APPROVE_OPTION){
-            try {   
-                sourceImage = ImageIO.read(imageChooser.getSelectedFile());
-                stegoImageLabel = new JLabel(new ImageIcon(sourceImage));
-                stegoImagePane.getViewport().add(stegoImageLabel);
-                this.validate();
-                stegoImagePane.setVisible(true);
-            } catch(Exception e) {  }
-        }
-    }//GEN-LAST:event_coverImageButtonActionPerformed
 
     private void saveFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileButtonActionPerformed
         String originalMessage = messageArea.getText();
@@ -208,17 +173,10 @@ public class DecryptionPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveFileButtonActionPerformed
 
-    private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-        sourceImage = null;
-        key = null;
-        switchPanels(new HomePanel());
-    }//GEN-LAST:event_homeButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton coverImageButton;
     private javax.swing.JButton decodeButton;
-    private javax.swing.JButton homeButton;
     private javax.swing.JTextField imageTextField;
     private javax.swing.JButton keyButton;
     private javax.swing.JTextField keyField;

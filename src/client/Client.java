@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLEditorKit;
 //import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
 public class Client extends javax.swing.JFrame {
@@ -25,6 +27,9 @@ public class Client extends javax.swing.JFrame {
     String message="", serverIP="127.0.0.1";
     int port;
     static Client client;
+    static JFrame frame;
+    EncryptionPanel encryptionPanel;
+    static int flag=0;
     
     public Client(){
         initComponents();
@@ -34,7 +39,7 @@ public class Client extends javax.swing.JFrame {
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
         try
         {
-            clientDisplay.setText(clientDisplay.getText()+"\n  Attempting Connection ...");
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Attempting Connection ...",null);
             try
             {
                 con = new Socket(InetAddress.getByName(serverIP),port);
@@ -43,7 +48,7 @@ public class Client extends javax.swing.JFrame {
                 setVisible(false);
             }
             
-            clientDisplay.setText(clientDisplay.getText()+"\n  Connected to: " + con.getInetAddress().getHostName());
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Connected to: " + con.getInetAddress().getHostName(),null);
             output = new ObjectOutputStream(con.getOutputStream());
             output.flush();
             input = new ObjectInputStream(con.getInputStream());
@@ -55,40 +60,40 @@ public class Client extends javax.swing.JFrame {
        }
     }
    
-    public void whileChatting() throws IOException, ClassNotFoundException
+    public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
 //          Object o = input.readObject();
-//          if("String".equals(o.getClass().getSimpleName())){
+//          if("String".equals(o.getClass())){
               message = (String) input.readObject();
-              clientDisplay.setText(clientDisplay.getText()+"\n  Server: "+message);
+              clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+message,null);
 //          }
 //          else{
 //              BufferedImage image = (BufferedImage) input.readObject();
-//              clientDisplay.setText(clientDisplay.getText()+("\n  Server"));
-//              clientDisplay.add(new JLabel((Icon) image));
+//              clientDisplay.setText(clientDisplay.getText()+("\n  Server: Image Sent."));
+//              new ImageDialog(image);
 //          }
       }
     }
     
-    public void sendMessage(String message)
+    public void sendMessage(String message) throws BadLocationException
     {
         try
         {
             output.writeObject(message);
             output.flush();
-            clientDisplay.setText(clientDisplay.getText()+"\n  Client: "+message);
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: "+message,null);
         }
         catch(IOException ioException){ 
-            clientDisplay.setText(clientDisplay.getText()+"\n  Unable to Send Message.");
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Unable to Send Message.",null);
         }
     }
     
-    public void sendImage() throws IOException{
-        output.writeObject(EncryptionPanel.img);
-        output.flush();
-        clientDisplay.setText(clientDisplay.getText()+"\n  Client: ");
-        clientDisplay.add(new JLabel((Icon) EncryptionPanel.img));
+    public void sendImage(BufferedImage image) throws IOException, BadLocationException{
+//        output.writeObject(EncryptionPanel.img);
+//        output.flush();
+        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
+        new ImageDialog(image);
 //        ImageIO.write(EncryptionPanel.img, "PNG", con.getOutputStream());
     }
     
@@ -102,12 +107,12 @@ public class Client extends javax.swing.JFrame {
         clientSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        clientDisplay = new javax.swing.JEditorPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        clientDisplay = new javax.swing.JTextPane();
+        clientDisplay.setEditable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client");
-        setLocation(new java.awt.Point(685, 50));
 
         clientText.setColumns(20);
         clientText.setLineWrap(true);
@@ -139,9 +144,9 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        clientDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        clientDisplay.setEnabled(false);
-        jScrollPane1.setViewportView(clientDisplay);
+        clientDisplay.setContentType("text/html");
+        clientDisplay.setEditorKit(new HTMLEditorKit());
+        jScrollPane2.setViewportView(clientDisplay);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,7 +155,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -173,8 +178,8 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
@@ -191,12 +196,37 @@ public class Client extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        new EncryptionFrame();
+        frame = new JFrame("Encryption");
+        encryptionPanel = new EncryptionPanel();
+        frame.add(encryptionPanel);
+        frame.setSize(910,710);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false); 
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void clientSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientSendActionPerformed
-        sendMessage(clientText.getText());
-        clientText.setText("");
+        if(flag==0){
+            try {
+                sendMessage(clientText.getText());
+                clientText.setText("");
+            } catch (BadLocationException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(flag==1){
+            try {
+                sendImage(encryptionPanel.img);
+                flag=0;
+                clientText.setText("");
+                clientText.setEditable(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_clientSendActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -215,13 +245,13 @@ public class Client extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane clientDisplay;
+    private javax.swing.JTextPane clientDisplay;
     private javax.swing.JButton clientSend;
-    private javax.swing.JTextArea clientText;
+    public static javax.swing.JTextArea clientText;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
     // End of variables declaration//GEN-END:variables
 }

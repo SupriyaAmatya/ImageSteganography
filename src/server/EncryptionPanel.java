@@ -33,7 +33,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         initComponents();
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
-//        sendButton.setVisible(false);
+        sendButton.setVisible(false);
         saveButton.setVisible(false); 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -137,7 +137,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
         sendButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         sendButton.setForeground(new java.awt.Color(0, 39, 45));
-        sendButton.setText("Send");
+        sendButton.setText("Ok");
         sendButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,8 +297,14 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_embedButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        server.sendImage(img);
-        setVisible(false);
+//        try {
+            server.flag = 1;
+            server.serverText.setText("(Stego-Image)");
+            server.serverText.setEditable(false);
+            server.frame.setVisible(false);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

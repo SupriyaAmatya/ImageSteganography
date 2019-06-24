@@ -1,6 +1,7 @@
 package server;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.EOFException;
@@ -13,6 +14,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 //import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
 public class Server extends JFrame{
@@ -23,8 +31,11 @@ public class Server extends JFrame{
     int port;
     String message;
     static Server server;
+    static JFrame frame;
+    EncryptionPanel encryptionPanel;
+    static int flag=0;
     
-    public Server() throws ClassNotFoundException{
+    public Server() throws ClassNotFoundException, BadLocationException{
         initComponents();
 //        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,15 +48,15 @@ public class Server extends JFrame{
             {
                 try
                 {
-                    serverDisplay.setText(serverDisplay.getText()+"\n  Waiting for Someone to Connect...");
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Waiting for Someone to Connect...",null);
                     cs=s.accept();
-                    serverDisplay.setText(serverDisplay.getText()+"\n  Connected to "+cs.getInetAddress().getHostName());
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Connected to "+cs.getInetAddress().getHostName(),null);
                     output = new ObjectOutputStream(cs.getOutputStream());
                     output.flush();
                     input = new ObjectInputStream(cs.getInputStream());
                     whileChatting();
                 }catch(EOFException eofException){
-                    serverDisplay.setText(serverDisplay.getText()+"\n  Connection to client lost.\n");
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Connection to client lost.\n",null);
                 }
             }
         } catch (IOException ex) {
@@ -56,41 +67,39 @@ public class Server extends JFrame{
         }
     }
 
-    public void whileChatting() throws IOException, ClassNotFoundException
+    public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
 //          Object o = input.readObject();
 //          if("String".equals(o.getClass().getSimpleName())){
               message = (String) input.readObject();
-              serverDisplay.setText(serverDisplay.getText()+"\n  Client: "+message);
+              serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message,null);
 //          }
 //          else{
 //              BufferedImage image = (BufferedImage)input.readObject();
-//              serverDisplay.setText(serverDisplay.getText()+("\n  Client:"));
-//              serverDisplay.add(new JLabel((Icon) image));
+//              serverDisplay.setText(serverDisplay.getText()+("\n  Client: Image Sent."));
+//              new ImageDialog(image);
 //          }
       }
     }
     
-    public void sendMessage(String message)
+    public void sendMessage(String message) throws BadLocationException
     {
         try
         {
             output.writeObject(message);
             output.flush();
-            serverDisplay.setText(serverDisplay.getText()+"\n  Server: "+message);
+            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: "+message,null);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void sendImage(BufferedImage img){
-        System.out.print("dfg");
+    public void sendImage(BufferedImage image) throws IOException, BadLocationException{
 //        output.writeObject(image);
 //        output.flush();
-//        serverDisplay.setText(serverDisplay.getText()+"\n  Server: ");
-//        serverDisplay.add(new JLabel((Icon) image));
-//        ImageIO.write(EncryptionPanel.img, "PNG", cs.getOutputStream());
+        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
+        new ImageDialog(image);
     }
     
     @SuppressWarnings("unchecked")
@@ -103,12 +112,12 @@ public class Server extends JFrame{
         serverSend = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        serverDisplay = new javax.swing.JEditorPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        serverDisplay = new javax.swing.JTextPane();
+        serverDisplay.setEditable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
-        setLocation(new java.awt.Point(50, 50));
 
         serverText.setColumns(20);
         serverText.setLineWrap(true);
@@ -140,9 +149,9 @@ public class Server extends JFrame{
             }
         });
 
-        serverDisplay.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        serverDisplay.setEnabled(false);
-        jScrollPane1.setViewportView(serverDisplay);
+        serverDisplay.setContentType("text/html");
+        serverDisplay.setEditorKit(new HTMLEditorKit());
+        jScrollPane2.setViewportView(serverDisplay);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,7 +160,7 @@ public class Server extends JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -171,7 +180,7 @@ public class Server extends JFrame{
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -186,15 +195,40 @@ public class Server extends JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        EncryptionFrame encryptionFrame = new EncryptionFrame();
+        frame = new JFrame("Encryption");
+        encryptionPanel = new EncryptionPanel();
+        frame.add(encryptionPanel);
+        frame.setSize(910,710);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void serverSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverSendActionPerformed
+        if(flag==0){
         try{
             sendMessage(serverText.getText());
             serverText.setText("");
         }catch (Exception e){
-            serverDisplay.setText(serverDisplay.getText()+"\n  Unable to Send Message");
+            try {
+                serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Unable to Send Message",null);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        }
+        else if(flag==1){
+            try {
+                sendImage(EncryptionPanel.img);
+                flag=0;
+                serverText.setText("");
+                serverText.setEditable(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_serverSendActionPerformed
 
@@ -210,7 +244,7 @@ public class Server extends JFrame{
             }   
     }//GEN-LAST:event_jButton2ActionPerformed
    
-    public static void main(String[] args) throws ClassNotFoundException, IOException 
+    public static void main(String[] args) throws ClassNotFoundException, IOException, BadLocationException 
     {
         server=new Server();
     }
@@ -219,10 +253,10 @@ public class Server extends JFrame{
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JEditorPane serverDisplay;
+    private javax.swing.JTextPane serverDisplay;
     private javax.swing.JButton serverSend;
-    private javax.swing.JTextArea serverText;
+    public static javax.swing.JTextArea serverText;
     // End of variables declaration//GEN-END:variables
 }

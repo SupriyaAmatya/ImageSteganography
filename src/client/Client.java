@@ -30,6 +30,7 @@ public class Client extends javax.swing.JFrame {
     static JFrame frame;
     EncryptionPanel encryptionPanel;
     static int flag=0;
+    static BufferedImage image;
     
     public Client(){
         initComponents();
@@ -89,12 +90,12 @@ public class Client extends javax.swing.JFrame {
         }
     }
     
-    public void sendImage(BufferedImage image) throws IOException, BadLocationException{
-//        output.writeObject(EncryptionPanel.img);
+    public void sendImage() throws IOException, BadLocationException{
+//        output.writeObject(image);
 //        output.flush();
+//        ImageIO.write(image, "PNG", con.getOutputStream());
         clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
         new ImageDialog(image);
-//        ImageIO.write(EncryptionPanel.img, "PNG", con.getOutputStream());
     }
     
     @SuppressWarnings("unchecked")
@@ -113,6 +114,7 @@ public class Client extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client");
+        setLocation(new java.awt.Point(690, 50));
 
         clientText.setColumns(20);
         clientText.setLineWrap(true);
@@ -155,14 +157,14 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                             .addComponent(clientSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -217,7 +219,7 @@ public class Client extends javax.swing.JFrame {
         }
         else if(flag==1){
             try {
-                sendImage(encryptionPanel.img);
+                sendImage();
                 flag=0;
                 clientText.setText("");
                 clientText.setEditable(true);

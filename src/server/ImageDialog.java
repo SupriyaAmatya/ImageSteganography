@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 
 public class ImageDialog extends javax.swing.JDialog {
     BufferedImage image;
+    static JFrame frame;
 
     public ImageDialog(BufferedImage img) {
         image = img;
@@ -37,7 +38,8 @@ public class ImageDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Received Stego-Image");
 
-        imageLabel.setPreferredSize(new java.awt.Dimension(100, 100));
+        imageLabel.setAutoscrolls(true);
+        imageLabel.setPreferredSize(new java.awt.Dimension(200, 200));
 
         jButton1.setText("Extract and Decrypt");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -58,11 +60,11 @@ public class ImageDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(50, 50, 50)
                 .addComponent(jButton2)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,7 +91,7 @@ public class ImageDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame frame = new JFrame("Decryption");
+        frame = new JFrame("Decryption");
         DecryptionPanel decryptionPanel = new DecryptionPanel(image);
         frame.add(decryptionPanel);
         frame.setSize(910,710);
@@ -100,21 +102,32 @@ public class ImageDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//        RenderedImage im = (RenderedImage) image;
+//        JFileChooser saveFileChooser = new JFileChooser("Save File");
+//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+//        if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//            File file = saveFileChooser.getSelectedFile();
+//            String filename = file.getName().toLowerCase();
+//            if (file == null) {
+//              return;
+//            }
+//            else if(validateName(filename)){
+//              file = new File(file.getParentFile(), file.getName() + ".jpg");
+//            }
+//            try {
+//                ImageIO.write(im, "jpg", file);
+//            } catch (IOException ex) {
+//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        
         RenderedImage im = (RenderedImage) image;
-        JFileChooser saveFileChooser = new JFileChooser("Save File");
-        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp))", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+        JFileChooser saveFileChooser = new JFileChooser();
         saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = saveFileChooser.getSelectedFile();
-            String filename = file.getName().toLowerCase();
-            if (file == null) {
-              return;
-            }
-            else if(validateName(filename)){
-              file = new File(file.getParentFile(), file.getName() + ".jpg");
-            }
+            File embedFile = saveFileChooser.getSelectedFile();
             try {
-                ImageIO.write(im, "jpg", file);
+                ImageIO.write(im, "png", embedFile);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

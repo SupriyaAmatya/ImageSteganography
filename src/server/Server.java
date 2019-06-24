@@ -34,6 +34,7 @@ public class Server extends JFrame{
     static JFrame frame;
     EncryptionPanel encryptionPanel;
     static int flag=0;
+    static BufferedImage image;
     
     public Server() throws ClassNotFoundException, BadLocationException{
         initComponents();
@@ -71,6 +72,7 @@ public class Server extends JFrame{
     {
       while(true){
 //          Object o = input.readObject();
+//          System.out.println(o.getClass().getSimpleName());
 //          if("String".equals(o.getClass().getSimpleName())){
               message = (String) input.readObject();
               serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message,null);
@@ -95,7 +97,7 @@ public class Server extends JFrame{
         }
     }
     
-    public void sendImage(BufferedImage image) throws IOException, BadLocationException{
+    public void sendImage() throws IOException, BadLocationException{
 //        output.writeObject(image);
 //        output.flush();
         serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
@@ -118,6 +120,7 @@ public class Server extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
+        setLocation(new java.awt.Point(50, 50));
 
         serverText.setColumns(20);
         serverText.setLineWrap(true);
@@ -179,8 +182,8 @@ public class Server extends JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -220,7 +223,7 @@ public class Server extends JFrame{
         }
         else if(flag==1){
             try {
-                sendImage(EncryptionPanel.img);
+                sendImage();
                 flag=0;
                 serverText.setText("");
                 serverText.setEditable(true);

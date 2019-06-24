@@ -302,27 +302,39 @@ public class EncryptionPanel extends javax.swing.JPanel{
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         client.flag = 1;
+        client.image = img;
         client.clientText.setText("(Stego-Image)");
         client.clientText.setEditable(false);
         client.frame.setVisible(false);
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+//        RenderedImage im = (RenderedImage) img;
+//        saveFileChooser = new JFileChooser("Save File");
+//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+//        if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//            File file = saveFileChooser.getSelectedFile();
+//            String filename = file.getName().toLowerCase();
+//            if (file == null) {
+//              return;
+//            }
+//            else if(validateName(filename)){
+//              file = new File(file.getParentFile(), file.getName() + ".jpg");
+//            }
+//            try {
+//                ImageIO.write(im, filename, file);
+//            } catch (IOException ex) {
+//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        
         RenderedImage im = (RenderedImage) img;
-        saveFileChooser = new JFileChooser("Save File");
-        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp))", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+        saveFileChooser = new JFileChooser();
         saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = saveFileChooser.getSelectedFile();
-            String filename = file.getName().toLowerCase();
-            if (file == null) {
-              return;
-            }
-            else if(validateName(filename)){
-              file = new File(file.getParentFile(), file.getName() + ".jpg");
-            }
+            File embedFile = saveFileChooser.getSelectedFile();
             try {
-                ImageIO.write(im, "jpg", file);
+                ImageIO.write(im, "png", embedFile);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

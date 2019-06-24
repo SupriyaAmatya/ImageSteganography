@@ -1,6 +1,6 @@
 package client;
 
-import imagesteganography.*;
+import imagesteganography.ExtensionFileFilter;
 import static imagesteganography.MethodsUsed.hideKey;
 import static imagesteganography.MethodsUsed.switchPanels;
 import java.awt.image.BufferedImage;
@@ -33,6 +33,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
         stegoImagePane.setVisible(true);
         messagePane.setVisible(false);
         saveFileButton.setVisible(false);
+        okButton.setVisible(false);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
@@ -60,6 +61,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
         messageArea = new javax.swing.JTextArea();
         saveFileButton = new javax.swing.JButton();
         decodeButton = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 39, 45));
         setMaximumSize(new java.awt.Dimension(900, 650));
@@ -121,7 +123,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
                 saveFileButtonActionPerformed(evt);
             }
         });
-        add(saveFileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 610, 110, 30));
+        add(saveFileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 610, 110, 30));
 
         decodeButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         decodeButton.setText("Extract and Decrypt");
@@ -131,6 +133,16 @@ public class DecryptionPanel extends javax.swing.JPanel {
             }
         });
         add(decodeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 160, 30));
+
+        okButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        okButton.setText("Ok");
+        okButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 610, 100, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void keyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyButtonActionPerformed
@@ -145,6 +157,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
             messagePane.getViewport().add(messageArea);
             messagePane.setVisible(true);
             saveFileButton.setVisible(true);
+            okButton.setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please re-check Stego Image and Key");
         }
@@ -173,6 +186,10 @@ public class DecryptionPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveFileButtonActionPerformed
 
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        ImageDialog.frame.setVisible(false);
+    }//GEN-LAST:event_okButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton coverImageButton;
@@ -182,6 +199,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
     private javax.swing.JTextField keyField;
     private javax.swing.JTextArea messageArea;
     private javax.swing.JScrollPane messagePane;
+    private javax.swing.JButton okButton;
     private javax.swing.JButton saveFileButton;
     private javax.swing.JLabel stegoImageLabel;
     private javax.swing.JScrollPane stegoImagePane;

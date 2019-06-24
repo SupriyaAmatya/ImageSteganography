@@ -1,7 +1,6 @@
 package client;
 
 import Decoder.BASE64Encoder;
-import static client.EncryptionPanel.imageChooser;
 import static imagesteganography.MethodsUsed.ToBinary;
 import static imagesteganography.MethodsUsed.keyGeneration;
 import java.awt.Color;
@@ -32,7 +31,7 @@ public class Encode {
 //        System.out.println(messageCipher);
         
         BufferedImage image;
-        image = ImageIO.read(imageChooser.getSelectedFile());
+        image = ImageIO.read(EncryptionPanel.imageChooser.getSelectedFile());
         int width =image.getWidth();
         int height =image.getHeight();
 

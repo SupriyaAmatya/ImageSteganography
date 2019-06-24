@@ -1,13 +1,13 @@
 package server;
 
 import Decoder.BASE64Encoder;
-import static server.EncryptionPanel.imageChooser;
 import static imagesteganography.MethodsUsed.ToBinary;
 import static imagesteganography.MethodsUsed.keyGeneration;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.Key;
+import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -32,7 +32,7 @@ public class Encode {
 //        System.out.println(messageCipher);
         
         BufferedImage image;
-        image = ImageIO.read(imageChooser.getSelectedFile());
+        image = ImageIO.read(EncryptionPanel.imageChooser.getSelectedFile());
         int width =image.getWidth();
         int height =image.getHeight();
 
@@ -172,7 +172,7 @@ public class Encode {
 //            System.out.println(ToBinary(l.getRed()));
 //            System.out.println(ToBinary(l.getGreen()));
 //            System.out.println(ToBinary(l.getBlue()));
-            
+//            
 //        System.out.println("Successful! New cover image created");
       
         return image;

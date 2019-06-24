@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 
 public class ImageDialog extends javax.swing.JDialog {
     BufferedImage image;
+    static JFrame frame;
 
     public ImageDialog(BufferedImage img) {
         image = img;
@@ -35,7 +36,8 @@ public class ImageDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Received Stego-Image");
 
-        imageLabel.setPreferredSize(new java.awt.Dimension(100, 100));
+        imageLabel.setAutoscrolls(true);
+        imageLabel.setPreferredSize(new java.awt.Dimension(200, 200));
 
         jButton1.setText("Extract and Decrypt");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,8 +59,8 @@ public class ImageDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(27, 27, 27))
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -73,12 +75,12 @@ public class ImageDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
@@ -87,7 +89,7 @@ public class ImageDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame frame = new JFrame("Decryption");
+        frame = new JFrame("Decryption");
         DecryptionPanel decryptionPanel = new DecryptionPanel(image);
         frame.add(decryptionPanel);
         frame.setSize(910,710);
@@ -98,21 +100,33 @@ public class ImageDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//        RenderedImage im = (RenderedImage) image;
+//        JFileChooser saveFileChooser = new JFileChooser("Save File");
+//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp))", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+//        if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//            File file = saveFileChooser.getSelectedFile();
+//            String filename = file.getName().toLowerCase();
+//            if (file == null) {
+//              return;
+//            }
+//            else if(validateName(filename)){
+//              file = new File(file.getParentFile(), file.getName() + ".jpg");
+//            }
+//            try {
+//                ImageIO.write(im, "jpg", file);
+//            } catch (IOException ex) {
+//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        
         RenderedImage im = (RenderedImage) image;
-        JFileChooser saveFileChooser = new JFileChooser("Save File");
-        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp))", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
+        JFileChooser saveFileChooser = new JFileChooser();
         saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = saveFileChooser.getSelectedFile();
-            String filename = file.getName().toLowerCase();
-            if (file == null) {
-              return;
-            }
-            else if(validateName(filename)){
-              file = new File(file.getParentFile(), file.getName() + ".jpg");
-            }
+            File embedFile = saveFileChooser.getSelectedFile();
             try {
-                ImageIO.write(im, "jpg", file);
+                ImageIO.write(im, "png", embedFile);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

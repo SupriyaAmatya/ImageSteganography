@@ -363,6 +363,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+       
     }//GEN-LAST:event_saveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

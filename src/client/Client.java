@@ -1,20 +1,21 @@
 package client;
 
-import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.OptionalDataException;
+import java.io.StreamCorruptedException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLEditorKit;
@@ -24,7 +25,9 @@ public class Client extends javax.swing.JFrame {
     Socket con;
     ObjectOutputStream output;
     ObjectInputStream input;
-    String message="", serverIP="127.0.0.1";
+    DataInputStream dIn;
+    DataOutputStream dOut;
+    String message="1", serverIP="127.0.0.1";
     int port;
     static Client client;
     static JFrame frame;
@@ -48,8 +51,9 @@ public class Client extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not connect to Server.");
                 setVisible(false);
             }
-            
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Connected to: " + con.getInetAddress().getHostName(),null);
+            dIn = new DataInputStream(con.getInputStream());
+            dOut = new DataOutputStream(con.getOutputStream());
             output = new ObjectOutputStream(con.getOutputStream());
             output.flush();
             input = new ObjectInputStream(con.getInputStream());
@@ -63,25 +67,32 @@ public class Client extends javax.swing.JFrame {
    
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
-      while(true){
-//          Object o = input.readObject();
-//          if("String".equals(o.getClass())){
-              message = (String) input.readObject();
-              clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+message,null);
-//          }
-//          else{
-//              BufferedImage image = (BufferedImage) input.readObject();
-//              clientDisplay.setText(clientDisplay.getText()+("\n  Server: Image Sent."));
-//              new ImageDialog(image);
-//          }
-      }
+        while(true){
+            try{
+//                message = (String) input.readObject();
+                System.out.println("hyaa");
+                if(input.readObject().toString().charAt(0)=='0'){
+                        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
+                }
+                else{
+                    int length = dIn.readInt();
+                    byte [] imageInByte = new byte[length];
+                    dIn.read(imageInByte);
+                    InputStream in = new ByteArrayInputStream(imageInByte);
+                    BufferedImage receivedImage = ImageIO.read(in);
+                    clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image",null);
+                    new ImageDialog(receivedImage);
+                }
+            }
+            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
+        }
     }
     
     public void sendMessage(String message) throws BadLocationException
     {
         try
         {
-            output.writeObject(message);
+            output.writeObject("0"+message);
             output.flush();
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: "+message,null);
         }
@@ -91,11 +102,11 @@ public class Client extends javax.swing.JFrame {
     }
     
     public void sendImage() throws IOException, BadLocationException{
-//        output.writeObject(image);
-//        output.flush();
+        output.writeObject(image);
+        output.flush();
 //        ImageIO.write(image, "PNG", con.getOutputStream());
         clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
-        new ImageDialog(image);
+//        new ImageDialog(image);
     }
     
     @SuppressWarnings("unchecked")

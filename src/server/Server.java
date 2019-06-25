@@ -4,12 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -71,12 +78,13 @@ public class Server extends JFrame{
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
-//          Object o = input.readObject();
-//          System.out.println(o.getClass().getSimpleName());
-//          if("String".equals(o.getClass().getSimpleName())){
-              message = (String) input.readObject();
-              serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message,null);
-//          }
+        message = (String) input.readObject();
+        if(message.charAt(0)=='0'){
+            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message.substring(1),null);
+        }
+        else{
+            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: image",null);
+        }
 //          else{
 //              BufferedImage image = (BufferedImage)input.readObject();
 //              serverDisplay.setText(serverDisplay.getText()+("\n  Client: Image Sent."));
@@ -89,7 +97,7 @@ public class Server extends JFrame{
     {
         try
         {
-            output.writeObject(message);
+            output.writeObject("0"+message);
             output.flush();
             serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: "+message,null);
         } catch (IOException ex) {
@@ -98,10 +106,22 @@ public class Server extends JFrame{
     }
     
     public void sendImage() throws IOException, BadLocationException{
-//        output.writeObject(image);
+//        File im = new File("image");
+////        output.writeObject(image);
+//        ImageIO.write(image, "jpg", im);
+//        ByteArrayOutputStream os = new ByteArrayOutputStream();
+//        ImageIO.write((RenderedImage) image, "", Base64.getEncoder().wrap(os));
+//        String result = os.toString(StandardCharsets.ISO_8859_1.name());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", baos );
+        baos.flush();
+        byte[] imageInByte = baos.toByteArray();
+        DataOutputStream dOut = new DataOutputStream(cs.getOutputStream());
+        dOut.writeInt(imageInByte.length);
+        dOut.write(imageInByte);
 //        output.flush();
         serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
-        new ImageDialog(image);
+//        new ImageDialog(image);
     }
     
     @SuppressWarnings("unchecked")

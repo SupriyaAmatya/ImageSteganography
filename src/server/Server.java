@@ -5,11 +5,14 @@ import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -35,6 +38,8 @@ public class Server extends JFrame{
     static Socket cs;
     ObjectOutputStream output;
     ObjectInputStream input;
+    DataInputStream dIn;
+    DataOutputStream dOut;
     int port;
     String message;
     static Server server;
@@ -59,6 +64,8 @@ public class Server extends JFrame{
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Waiting for Someone to Connect...",null);
                     cs=s.accept();
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Connected to "+cs.getInetAddress().getHostName(),null);
+                    dIn = new DataInputStream(cs.getInputStream());
+                    dOut = new DataOutputStream(cs.getOutputStream());
                     output = new ObjectOutputStream(cs.getOutputStream());
                     output.flush();
                     input = new ObjectInputStream(cs.getInputStream());
@@ -78,17 +85,21 @@ public class Server extends JFrame{
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
-        message = (String) input.readObject();
-        if(message.charAt(0)=='0'){
-            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message.substring(1),null);
-        }
-        else{
-            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: image",null);
-        }
+//        message = (String) input.readObject();
+//        if(message.charAt(0)=='0'){
+//            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message.substring(1),null);
+//        }
+//        else{
+//            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: image",null);
+//        }
 //          else{
-//              BufferedImage image = (BufferedImage)input.readObject();
-//              serverDisplay.setText(serverDisplay.getText()+("\n  Client: Image Sent."));
-//              new ImageDialog(image);
+                    int length = dIn.readInt();
+                    byte [] imageInByte = new byte[length];
+                    dIn.readFully(imageInByte, 0, length);
+                    InputStream in = new ByteArrayInputStream(imageInByte);
+                    BufferedImage receivedImage = ImageIO.read(in);
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: Image",null);
+//                    new ImageDialog(receivedImage);
 //          }
       }
     }
@@ -107,19 +118,19 @@ public class Server extends JFrame{
     
     public void sendImage() throws IOException, BadLocationException{
 //        File im = new File("image");
-////        output.writeObject(image);
-//        ImageIO.write(image, "jpg", im);
+//        output.writeObject(image);
+        ImageIO.write(image, "jpg", cs.getOutputStream());
 //        ByteArrayOutputStream os = new ByteArrayOutputStream();
 //        ImageIO.write((RenderedImage) image, "", Base64.getEncoder().wrap(os));
 //        String result = os.toString(StandardCharsets.ISO_8859_1.name());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(image, "jpg", baos );
-        baos.flush();
-        byte[] imageInByte = baos.toByteArray();
-        DataOutputStream dOut = new DataOutputStream(cs.getOutputStream());
-        dOut.writeInt(imageInByte.length);
-        dOut.write(imageInByte);
-//        output.flush();
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        ImageIO.write(image, "jpg", baos );
+//        baos.flush();
+//        byte[] imageInByte = baos.toByteArray();
+//        DataOutputStream dOut = new DataOutputStream(cs.getOutputStream());
+//        dOut.writeInt(imageInByte.length);
+//        dOut.write(imageInByte);
+        output.flush();
         serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
 //        new ImageDialog(image);
     }

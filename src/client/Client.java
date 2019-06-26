@@ -2,6 +2,7 @@ package client;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -68,23 +69,24 @@ public class Client extends javax.swing.JFrame {
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
         while(true){
-            try{
+//            try{
 //                message = (String) input.readObject();
-                System.out.println("hyaa");
-                if(input.readObject().toString().charAt(0)=='0'){
-                        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
-                }
-                else{
-                    int length = dIn.readInt();
-                    byte [] imageInByte = new byte[length];
-                    dIn.read(imageInByte);
-                    InputStream in = new ByteArrayInputStream(imageInByte);
-                    BufferedImage receivedImage = ImageIO.read(in);
+//                System.out.println("hyaa");
+//                if(input.readObject().toString().charAt(0)=='0'){
+//                        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
+//                }
+//                else{
+//                    int length = dIn.readInt();
+//                    byte [] imageInByte = new byte[length];
+//                    dIn.readFully(imageInByte, 0, length);
+//                    InputStream in = new ByteArrayInputStream(imageInByte);
+//                    BufferedImage receivedImage = ImageIO.read(in);
+            BufferedImage receivedImage = (BufferedImage) con.getInputStream();
                     clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image",null);
                     new ImageDialog(receivedImage);
-                }
-            }
-            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
+//                }
+//            }
+//            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
         }
     }
     
@@ -102,9 +104,14 @@ public class Client extends javax.swing.JFrame {
     }
     
     public void sendImage() throws IOException, BadLocationException{
-        output.writeObject(image);
-        output.flush();
-//        ImageIO.write(image, "PNG", con.getOutputStream());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", baos );
+        baos.flush();
+        byte[] imageInByte = baos.toByteArray();
+        DataOutputStream dOut = new DataOutputStream(con.getOutputStream());
+        dOut.writeInt(imageInByte.length);
+        dOut.write(imageInByte);
+//        output.flush();
         clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
 //        new ImageDialog(image);
     }

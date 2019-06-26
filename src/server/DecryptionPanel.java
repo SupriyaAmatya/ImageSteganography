@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static server.Server.serverSend;
 
 public class DecryptionPanel extends javax.swing.JPanel {
     static JFileChooser imageChooser, saveFileChooser;

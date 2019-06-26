@@ -1,5 +1,6 @@
 package client;
 
+import static client.Client.client;
 import imagesteganography.ExtensionFileFilter;
 import static imagesteganography.MethodsUsed.hideKey;
 import static imagesteganography.MethodsUsed.switchPanels;

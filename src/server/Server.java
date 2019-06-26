@@ -1,35 +1,20 @@
 package server;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.EOFException;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 //import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 //import static sun.org.mozilla.javascript.internal.ScriptRuntime.typeof;
 
@@ -38,8 +23,6 @@ public class Server extends JFrame{
     static Socket cs;
     ObjectOutputStream output;
     ObjectInputStream input;
-    DataInputStream dIn;
-    DataOutputStream dOut;
     int port;
     String message;
     static Server server;
@@ -52,6 +35,7 @@ public class Server extends JFrame{
         initComponents();
 //        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        serverSend.setEnabled(false);
         this.setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
         try
@@ -64,8 +48,6 @@ public class Server extends JFrame{
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Waiting for Someone to Connect...",null);
                     cs=s.accept();
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Connected to "+cs.getInetAddress().getHostName(),null);
-                    dIn = new DataInputStream(cs.getInputStream());
-                    dOut = new DataOutputStream(cs.getOutputStream());
                     output = new ObjectOutputStream(cs.getOutputStream());
                     output.flush();
                     input = new ObjectInputStream(cs.getInputStream());
@@ -85,23 +67,19 @@ public class Server extends JFrame{
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
-//        message = (String) input.readObject();
-//        if(message.charAt(0)=='0'){
-//            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+message.substring(1),null);
-//        }
-//        else{
-//            serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: image",null);
-//        }
-//          else{
-                    int length = dIn.readInt();
-                    byte [] imageInByte = new byte[length];
-                    dIn.readFully(imageInByte, 0, length);
-                    InputStream in = new ByteArrayInputStream(imageInByte);
-                    BufferedImage receivedImage = ImageIO.read(in);
-                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: Image",null);
-//                    new ImageDialog(receivedImage);
-//          }
-      }
+//            try{
+//                message = (String) input.readObject();
+//                if(input.readObject().toString().charAt(0)=='0'){
+//                        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
+//                }
+//                else{
+                    BufferedImage receivedImage = ImageIO.read(cs.getInputStream());
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image",null);
+                    new ImageDialog(receivedImage);
+//                }
+//            }
+//            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
+        }
     }
     
     public void sendMessage(String message) throws BadLocationException
@@ -117,22 +95,11 @@ public class Server extends JFrame{
     }
     
     public void sendImage() throws IOException, BadLocationException{
-//        File im = new File("image");
-//        output.writeObject(image);
-        ImageIO.write(image, "jpg", cs.getOutputStream());
-//        ByteArrayOutputStream os = new ByteArrayOutputStream();
-//        ImageIO.write((RenderedImage) image, "", Base64.getEncoder().wrap(os));
-//        String result = os.toString(StandardCharsets.ISO_8859_1.name());
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        ImageIO.write(image, "jpg", baos );
-//        baos.flush();
-//        byte[] imageInByte = baos.toByteArray();
-//        DataOutputStream dOut = new DataOutputStream(cs.getOutputStream());
-//        dOut.writeInt(imageInByte.length);
-//        dOut.write(imageInByte);
-        output.flush();
-        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
-//        new ImageDialog(image);
+        ImageIO.write(image, "png", cs.getOutputStream());
+//        cs.getOutputStream().flush();
+//        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
+        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
+        this.dispose();
     }
     
     @SuppressWarnings("unchecked")
@@ -151,12 +118,13 @@ public class Server extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
-        setLocation(new java.awt.Point(50, 50));
 
         serverText.setColumns(20);
         serverText.setLineWrap(true);
         serverText.setRows(5);
         serverText.setWrapStyleWord(true);
+        serverText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        serverText.setEnabled(false);
         jScrollPane3.setViewportView(serverText);
 
         jButton6.setText("Encrypt");
@@ -290,7 +258,7 @@ public class Server extends JFrame{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane serverDisplay;
-    private javax.swing.JButton serverSend;
+    public static javax.swing.JButton serverSend;
     public static javax.swing.JTextArea serverText;
     // End of variables declaration//GEN-END:variables
 }

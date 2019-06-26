@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -26,8 +27,6 @@ public class Client extends javax.swing.JFrame {
     Socket con;
     ObjectOutputStream output;
     ObjectInputStream input;
-    DataInputStream dIn;
-    DataOutputStream dOut;
     String message="1", serverIP="127.0.0.1";
     int port;
     static Client client;
@@ -41,6 +40,7 @@ public class Client extends javax.swing.JFrame {
 //        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
+        clientSend.setEnabled(false);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
         try
         {
@@ -53,8 +53,6 @@ public class Client extends javax.swing.JFrame {
                 setVisible(false);
             }
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Connected to: " + con.getInetAddress().getHostName(),null);
-            dIn = new DataInputStream(con.getInputStream());
-            dOut = new DataOutputStream(con.getOutputStream());
             output = new ObjectOutputStream(con.getOutputStream());
             output.flush();
             input = new ObjectInputStream(con.getInputStream());
@@ -71,17 +69,11 @@ public class Client extends javax.swing.JFrame {
         while(true){
 //            try{
 //                message = (String) input.readObject();
-//                System.out.println("hyaa");
 //                if(input.readObject().toString().charAt(0)=='0'){
 //                        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
 //                }
 //                else{
-//                    int length = dIn.readInt();
-//                    byte [] imageInByte = new byte[length];
-//                    dIn.readFully(imageInByte, 0, length);
-//                    InputStream in = new ByteArrayInputStream(imageInByte);
-//                    BufferedImage receivedImage = ImageIO.read(in);
-            BufferedImage receivedImage = (BufferedImage) con.getInputStream();
+                    BufferedImage receivedImage = ImageIO.read(con.getInputStream());
                     clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image",null);
                     new ImageDialog(receivedImage);
 //                }
@@ -104,16 +96,11 @@ public class Client extends javax.swing.JFrame {
     }
     
     public void sendImage() throws IOException, BadLocationException{
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(image, "jpg", baos );
-        baos.flush();
-        byte[] imageInByte = baos.toByteArray();
-        DataOutputStream dOut = new DataOutputStream(con.getOutputStream());
-        dOut.writeInt(imageInByte.length);
-        dOut.write(imageInByte);
-//        output.flush();
-        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
-//        new ImageDialog(image);
+        ImageIO.write(image, "png", con.getOutputStream());
+//        con.getOutputStream().flush();
+//        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
+        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Connection lost");
+        this.dispose();
     }
     
     @SuppressWarnings("unchecked")
@@ -138,6 +125,8 @@ public class Client extends javax.swing.JFrame {
         clientText.setLineWrap(true);
         clientText.setRows(5);
         clientText.setWrapStyleWord(true);
+        clientText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        clientText.setEnabled(false);
         jScrollPane6.setViewportView(clientText);
 
         jButton11.setText("Encrypt");
@@ -266,7 +255,7 @@ public class Client extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane clientDisplay;
-    private javax.swing.JButton clientSend;
+    public static javax.swing.JButton clientSend;
     public static javax.swing.JTextArea clientText;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;

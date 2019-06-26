@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileFilter;
 import static server.Server.server;
+import static server.Server.serverSend;
 
 public class EncryptionPanel extends javax.swing.JPanel{
     
@@ -302,6 +303,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             server.image = img;
             server.serverText.setText("(Stego-Image)");
             server.serverText.setEditable(false);
+            serverSend.setEnabled(true);
             server.frame.setVisible(false);
 //        } catch (ClassNotFoundException ex) {
 //            Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);

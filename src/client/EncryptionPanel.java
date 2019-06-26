@@ -1,6 +1,7 @@
 package client;
 
 import static client.Client.client;
+import static client.Client.clientSend;
 import imagesteganography.ExtensionFileFilter;
 import static imagesteganography.MethodsUsed.*;
 import java.awt.BorderLayout;
@@ -303,6 +304,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         client.flag = 1;
         client.image = img;
+        clientSend.setEnabled(true);
         client.clientText.setText("(Stego-Image)");
         client.clientText.setEditable(false);
         client.frame.setVisible(false);

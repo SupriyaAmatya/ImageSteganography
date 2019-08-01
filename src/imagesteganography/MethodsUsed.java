@@ -55,11 +55,11 @@ public class MethodsUsed {
         return 0;
     }
     
-    public static boolean validateName(String s) {
-        if(s.endsWith(".jpg")) return false;
-        else if(s.endsWith(".png")) return false;
-        else if(s.endsWith(".jpeg")) return false;
-        else if(s.endsWith(".bmp")) return false;
+    public static boolean validateName(File f) {
+        if(f.getName().toLowerCase().endsWith(".jpg")) return false;
+        else if(f.getName().toLowerCase().endsWith(".png")) return false;
+        else if(f.getName().toLowerCase().endsWith(".bmp")) return false;
+        else if(f.getName().toLowerCase().endsWith(".jpeg")) return false;
         else return true;
     }
 }

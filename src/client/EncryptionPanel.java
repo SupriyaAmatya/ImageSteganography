@@ -311,32 +311,19 @@ public class EncryptionPanel extends javax.swing.JPanel{
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-//        RenderedImage im = (RenderedImage) img;
-//        saveFileChooser = new JFileChooser("Save File");
-//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
-//        if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-//            File file = saveFileChooser.getSelectedFile();
-//            String filename = file.getName().toLowerCase();
-//            if (file == null) {
-//              return;
-//            }
-//            else if(validateName(filename)){
-//              file = new File(file.getParentFile(), file.getName() + ".jpg");
-//            }
-//            try {
-//                ImageIO.write(im, filename, file);
-//            } catch (IOException ex) {
-//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        
         RenderedImage im = (RenderedImage) img;
         saveFileChooser = new JFileChooser();
         saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File embedFile = saveFileChooser.getSelectedFile();
+            File file = saveFileChooser.getSelectedFile();
+            if (file == null) {
+              return;
+            }
+            else if (validateName(file)){
+              file = new File(file.getParentFile(), file.getName() + ".jpg");
+            }
             try {
-                ImageIO.write(im, "png", embedFile);
+                ImageIO.write(im, "jpg", file);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

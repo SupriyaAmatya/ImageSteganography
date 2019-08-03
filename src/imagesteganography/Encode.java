@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.Key;
-import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -27,9 +26,9 @@ public class Encode {
     
     public static BufferedImage embed(String messageCipher) throws IOException{
         int msglen = messageCipher.length()*2;
-        System.out.println(msglen);
+//        System.out.println(msglen);
         messageCipher = Integer.toString(msglen)+'/'+messageCipher;
-        System.out.println(messageCipher);
+//        System.out.println(messageCipher);
         
         BufferedImage image;
         image = ImageIO.read(EncryptionPanel.imageChooser.getSelectedFile());
@@ -40,38 +39,38 @@ public class Encode {
             JOptionPane.showMessageDialog(new JFrame(),"Error! Image too small. Please select another image.");
             return null;
         }  
-            Color x =new Color (image.getRGB(0,0));
-            System.out.println(ToBinary(x.getRed()));
-            System.out.println(ToBinary(x.getGreen()));
-            System.out.println(ToBinary(x.getBlue()));
-            Color x1 =new Color (image.getRGB(1,0));
-            System.out.println(ToBinary(x1.getRed()));
-            System.out.println(ToBinary(x1.getGreen()));
-            System.out.println(ToBinary(x1.getBlue()));
-            Color x2 =new Color (image.getRGB(2,0));
-            System.out.println(ToBinary(x2.getRed()));
-            System.out.println(ToBinary(x2.getGreen()));
-            System.out.println(ToBinary(x2.getBlue()));
-            Color x3 =new Color (image.getRGB(3,0));
-            System.out.println(ToBinary(x3.getRed()));
-            System.out.println(ToBinary(x3.getGreen()));
-            System.out.println(ToBinary(x3.getBlue()));
-            Color x4 =new Color (image.getRGB(4,0));
-            System.out.println(ToBinary(x4.getRed()));
-            System.out.println(ToBinary(x4.getGreen()));
-            System.out.println(ToBinary(x4.getBlue()));
-            Color x5 =new Color (image.getRGB(5,0));
-            System.out.println(ToBinary(x5.getRed()));
-            System.out.println(ToBinary(x5.getGreen()));
-            System.out.println(ToBinary(x5.getBlue()));
-            Color x6 =new Color (image.getRGB(6,0));
-            System.out.println(ToBinary(x6.getRed()));
-            System.out.println(ToBinary(x6.getGreen()));
-            System.out.println(ToBinary(x6.getBlue()));
-            Color x7 =new Color (image.getRGB(7,0));
-            System.out.println(ToBinary(x7.getRed()));
-            System.out.println(ToBinary(x7.getGreen()));
-            System.out.println(ToBinary(x7.getBlue()));
+//            Color x =new Color (image.getRGB(0,0));
+//            System.out.println(ToBinary(x.getRed()));
+//            System.out.println(ToBinary(x.getGreen()));
+//            System.out.println(ToBinary(x.getBlue()));
+//            Color x1 =new Color (image.getRGB(1,0));
+//            System.out.println(ToBinary(x1.getRed()));
+//            System.out.println(ToBinary(x1.getGreen()));
+//            System.out.println(ToBinary(x1.getBlue()));
+//            Color x2 =new Color (image.getRGB(2,0));
+//            System.out.println(ToBinary(x2.getRed()));
+//            System.out.println(ToBinary(x2.getGreen()));
+//            System.out.println(ToBinary(x2.getBlue()));
+//            Color x3 =new Color (image.getRGB(3,0));
+//            System.out.println(ToBinary(x3.getRed()));
+//            System.out.println(ToBinary(x3.getGreen()));
+//            System.out.println(ToBinary(x3.getBlue()));
+//            Color x4 =new Color (image.getRGB(4,0));
+//            System.out.println(ToBinary(x4.getRed()));
+//            System.out.println(ToBinary(x4.getGreen()));
+//            System.out.println(ToBinary(x4.getBlue()));
+//            Color x5 =new Color (image.getRGB(5,0));
+//            System.out.println(ToBinary(x5.getRed()));
+//            System.out.println(ToBinary(x5.getGreen()));
+//            System.out.println(ToBinary(x5.getBlue()));
+//            Color x6 =new Color (image.getRGB(6,0));
+//            System.out.println(ToBinary(x6.getRed()));
+//            System.out.println(ToBinary(x6.getGreen()));
+//            System.out.println(ToBinary(x6.getBlue()));
+//            Color x7 =new Color (image.getRGB(7,0));
+//            System.out.println(ToBinary(x7.getRed()));
+//            System.out.println(ToBinary(x7.getGreen()));
+//            System.out.println(ToBinary(x7.getBlue()));
             
    
             int count = 0;
@@ -83,7 +82,7 @@ public class Encode {
                 }
             }
             
-           System.out.println(Arrays.toString(msgBit));
+//           System.out.println(Arrays.toString(msgBit));
             
             count = 0;
             int red, green, blue;
@@ -128,52 +127,52 @@ public class Encode {
             }
             
             
-            Color a =new Color (image.getRGB(0,0));
-            System.out.println(ToBinary(a.getRed()));
-            System.out.println(ToBinary(a.getGreen()));
-            System.out.println(ToBinary(a.getBlue()));
-            Color b =new Color (image.getRGB(1,0));
-            System.out.println(ToBinary(b.getRed()));
-            System.out.println(ToBinary(b.getGreen()));
-            System.out.println(ToBinary(b.getBlue()));
-            Color d =new Color (image.getRGB(2,0));
-            System.out.println(ToBinary(d.getRed()));
-            System.out.println(ToBinary(d.getGreen()));
-            System.out.println(ToBinary(d.getBlue()));
-            Color e =new Color (image.getRGB(3,0));
-            System.out.println(ToBinary(e.getRed()));
-            System.out.println(ToBinary(e.getGreen()));
-            System.out.println(ToBinary(e.getBlue()));
-            Color f =new Color (image.getRGB(4,0));
-            System.out.println(ToBinary(f.getRed()));
-            System.out.println(ToBinary(f.getGreen()));
-            System.out.println(ToBinary(f.getBlue()));
-            Color g =new Color (image.getRGB(5,0));
-            System.out.println(ToBinary(g.getRed()));
-            System.out.println(ToBinary(g.getGreen()));
-            System.out.println(ToBinary(g.getBlue()));
-            Color h =new Color (image.getRGB(6,0));
-            System.out.println(ToBinary(h.getRed()));
-            System.out.println(ToBinary(h.getGreen()));
-            System.out.println(ToBinary(h.getBlue()));
-            Color i =new Color (image.getRGB(7,0));
-            System.out.println(ToBinary(i.getRed()));
-            System.out.println(ToBinary(i.getGreen()));
-            System.out.println(ToBinary(i.getBlue()));
-            Color j =new Color (image.getRGB(8,0));
-            System.out.println(ToBinary(j.getRed()));
-            System.out.println(ToBinary(j.getGreen()));
-            System.out.println(ToBinary(j.getBlue()));
-            Color k =new Color (image.getRGB(9,0));
-            System.out.println(ToBinary(k.getRed()));
-            System.out.println(ToBinary(k.getGreen()));
-            System.out.println(ToBinary(k.getBlue()));
-            Color l =new Color (image.getRGB(10,0));
-            System.out.println(ToBinary(l.getRed()));
-            System.out.println(ToBinary(l.getGreen()));
-            System.out.println(ToBinary(l.getBlue()));
-            
-        System.out.println("Successful! New cover image created");
+//            Color a =new Color (image.getRGB(0,0));
+//            System.out.println(ToBinary(a.getRed()));
+//            System.out.println(ToBinary(a.getGreen()));
+//            System.out.println(ToBinary(a.getBlue()));
+//            Color b =new Color (image.getRGB(1,0));
+//            System.out.println(ToBinary(b.getRed()));
+//            System.out.println(ToBinary(b.getGreen()));
+//            System.out.println(ToBinary(b.getBlue()));
+//            Color d =new Color (image.getRGB(2,0));
+//            System.out.println(ToBinary(d.getRed()));
+//            System.out.println(ToBinary(d.getGreen()));
+//            System.out.println(ToBinary(d.getBlue()));
+//            Color e =new Color (image.getRGB(3,0));
+//            System.out.println(ToBinary(e.getRed()));
+//            System.out.println(ToBinary(e.getGreen()));
+//            System.out.println(ToBinary(e.getBlue()));
+//            Color f =new Color (image.getRGB(4,0));
+//            System.out.println(ToBinary(f.getRed()));
+//            System.out.println(ToBinary(f.getGreen()));
+//            System.out.println(ToBinary(f.getBlue()));
+//            Color g =new Color (image.getRGB(5,0));
+//            System.out.println(ToBinary(g.getRed()));
+//            System.out.println(ToBinary(g.getGreen()));
+//            System.out.println(ToBinary(g.getBlue()));
+//            Color h =new Color (image.getRGB(6,0));
+//            System.out.println(ToBinary(h.getRed()));
+//            System.out.println(ToBinary(h.getGreen()));
+//            System.out.println(ToBinary(h.getBlue()));
+//            Color i =new Color (image.getRGB(7,0));
+//            System.out.println(ToBinary(i.getRed()));
+//            System.out.println(ToBinary(i.getGreen()));
+//            System.out.println(ToBinary(i.getBlue()));
+//            Color j =new Color (image.getRGB(8,0));
+//            System.out.println(ToBinary(j.getRed()));
+//            System.out.println(ToBinary(j.getGreen()));
+//            System.out.println(ToBinary(j.getBlue()));
+//            Color k =new Color (image.getRGB(9,0));
+//            System.out.println(ToBinary(k.getRed()));
+//            System.out.println(ToBinary(k.getGreen()));
+//            System.out.println(ToBinary(k.getBlue()));
+//            Color l =new Color (image.getRGB(10,0));
+//            System.out.println(ToBinary(l.getRed()));
+//            System.out.println(ToBinary(l.getGreen()));
+//            System.out.println(ToBinary(l.getBlue()));
+//            
+//        System.out.println("Successful! New cover image created");
       
         return image;
     }

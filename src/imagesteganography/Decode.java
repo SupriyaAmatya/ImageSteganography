@@ -1,4 +1,5 @@
 package imagesteganography;
+
 import Decoder.BASE64Decoder;
 import static imagesteganography.MethodsUsed.ToBinary;
 import static imagesteganography.MethodsUsed.keyGeneration;

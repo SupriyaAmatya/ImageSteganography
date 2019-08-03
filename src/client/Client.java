@@ -3,11 +3,7 @@ package client;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
@@ -32,7 +28,7 @@ public class Client extends javax.swing.JFrame {
     static Client client;
     static JFrame frame;
     EncryptionPanel encryptionPanel;
-    static int flag=0;
+//    static int flag=0;
     static BufferedImage image;
     
     public Client(){
@@ -40,7 +36,6 @@ public class Client extends javax.swing.JFrame {
 //        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
-        clientSend.setEnabled(false);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number of server."));
         try
         {
@@ -67,18 +62,22 @@ public class Client extends javax.swing.JFrame {
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
         while(true){
-//            try{
+//            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString(),null);
+            try{
 //                message = (String) input.readObject();
 //                if(input.readObject().toString().charAt(0)=='0'){
 //                        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
 //                }
 //                else{
-                    BufferedImage receivedImage = ImageIO.read(con.getInputStream());
+//                    BufferedImage receivedImage = ImageIO.read(con.getInputStream());
+                ByteArrayInputStream bis = new ByteArrayInputStream((byte[]) input.readObject());
+                BufferedImage receivedImage = ImageIO.read(bis);
+//                    BufferedImage receivedImage = (BufferedImage) input.readObject();
                     clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image",null);
-                    new ImageDialog(receivedImage);
+                    new ImageDialog(receivedImage).setLocationRelativeTo(null);
 //                }
-//            }
-//            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
+            }
+            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
         }
     }
     
@@ -86,7 +85,7 @@ public class Client extends javax.swing.JFrame {
     {
         try
         {
-            output.writeObject("0"+message);
+            output.writeObject(message);
             output.flush();
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: "+message,null);
         }
@@ -95,12 +94,22 @@ public class Client extends javax.swing.JFrame {
         }
     }
     
-    public void sendImage() throws IOException, BadLocationException{
-        ImageIO.write(image, "png", con.getOutputStream());
-//        con.getOutputStream().flush();
-//        clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
-        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Connection lost");
-        this.dispose();
+    public void sendImage() throws BadLocationException{
+        try
+        {
+//            ImageIO.write(image, "png", con.getOutputStream());
+//            con.getOutputStream().flush();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", bos );
+            byte [] data = bos.toByteArray();
+            output.writeObject(data);
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Client: Image Sent.",null);
+    //        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Connection lost");
+    //        this.dispose();
+        }
+        catch(IOException ioException){ 
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Unable to Send Image.",null);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -137,6 +146,7 @@ public class Client extends javax.swing.JFrame {
         });
 
         clientSend.setText("Send");
+        clientSend.setEnabled(false);
         clientSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clientSendActionPerformed(evt);
@@ -216,26 +226,25 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void clientSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientSendActionPerformed
-        if(flag==0){
-            try {
-                sendMessage(clientText.getText());
-                clientText.setText("");
-            } catch (BadLocationException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else if(flag==1){
+//        if(flag==0){
+//            try {
+//                sendMessage(clientText.getText());
+//                clientText.setText("");
+//            } catch (BadLocationException ex) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        else if(flag==1){
             try {
                 sendImage();
-                flag=0;
+//                flag=0;
                 clientText.setText("");
-                clientText.setEditable(true);
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                clientSend.setEnabled(false);
+//                clientText.setEditable(true);
             } catch (BadLocationException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+//        }
     }//GEN-LAST:event_clientSendActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed

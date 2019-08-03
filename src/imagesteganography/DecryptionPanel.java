@@ -162,6 +162,7 @@ public class DecryptionPanel extends javax.swing.JPanel {
             saveFileButton.setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please re-check Stego Image and Key");
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_decodeButtonActionPerformed
 

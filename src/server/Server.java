@@ -1,12 +1,14 @@
 package server;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
+import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
 //import java.util.Base64;
@@ -28,14 +30,13 @@ public class Server extends JFrame{
     static Server server;
     static JFrame frame;
     EncryptionPanel encryptionPanel;
-    static int flag=0;
+//    static int flag=0;
     static BufferedImage image;
     
     public Server() throws ClassNotFoundException, BadLocationException{
         initComponents();
 //        setLocationRelativeTo(null);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        serverSend.setEnabled(false);
         this.setVisible(true);
         port = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Port"), "Enter port number to assign."));
         try
@@ -67,18 +68,21 @@ public class Server extends JFrame{
     public void whileChatting() throws IOException, ClassNotFoundException, BadLocationException
     {
       while(true){
-//            try{
+//          serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+ input.readObject().toString(),null);
+            try{
 //                message = (String) input.readObject();
 //                if(input.readObject().toString().charAt(0)=='0'){
-//                        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: "+input.readObject().toString().substring(1),null);
+//                        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: "+input.readObject().toString().substring(1),null);
 //                }
 //                else{
-                    BufferedImage receivedImage = ImageIO.read(cs.getInputStream());
-                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image",null);
-                    new ImageDialog(receivedImage);
+//                    BufferedImage receivedImage = ImageIO.read(cs.getInputStream());
+                ByteArrayInputStream bis = new ByteArrayInputStream((byte[]) input.readObject());
+                BufferedImage receivedImage = ImageIO.read(bis);
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Client: Image",null);
+                    new ImageDialog(receivedImage).setLocationRelativeTo(null);
 //                }
-//            }
-//            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
+            }
+            catch(OptionalDataException | StreamCorruptedException e){ e.printStackTrace(); }
         }
     }
     
@@ -86,7 +90,7 @@ public class Server extends JFrame{
     {
         try
         {
-            output.writeObject("0"+message);
+            output.writeObject(message);
             output.flush();
             serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: "+message,null);
         } catch (IOException ex) {
@@ -95,11 +99,15 @@ public class Server extends JFrame{
     }
     
     public void sendImage() throws IOException, BadLocationException{
-        ImageIO.write(image, "png", cs.getOutputStream());
+//        ImageIO.write(image, "png", cs.getOutputStream());
 //        cs.getOutputStream().flush();
-//        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
-        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
-        this.dispose();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", bos );
+        byte [] data = bos.toByteArray();
+        output.writeObject(data);
+        serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Server: Image Sent.",null);
+//        JOptionPane.showMessageDialog(new JFrame("Error!"), "Sorry, Could not start Server.");
+//        this.dispose();
     }
     
     @SuppressWarnings("unchecked")
@@ -118,6 +126,7 @@ public class Server extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Server");
+        setLocation(new java.awt.Point(50, 50));
 
         serverText.setColumns(20);
         serverText.setLineWrap(true);
@@ -135,6 +144,7 @@ public class Server extends JFrame{
         });
 
         serverSend.setText("Send");
+        serverSend.setEnabled(false);
         serverSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serverSendActionPerformed(evt);
@@ -162,9 +172,9 @@ public class Server extends JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -208,30 +218,31 @@ public class Server extends JFrame{
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void serverSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverSendActionPerformed
-        if(flag==0){
-        try{
-            sendMessage(serverText.getText());
-            serverText.setText("");
-        }catch (Exception e){
-            try {
-                serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Unable to Send Message",null);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        }
-        else if(flag==1){
+//        if(flag==0){
+//        try{
+//            sendMessage(serverText.getText());
+//            serverText.setText("");
+//        }catch (Exception e){
+//            try {
+//                serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Unable to Send Message",null);
+//            } catch (BadLocationException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        }
+//        else if(flag==1){
             try {
                 sendImage();
-                flag=0;
+//                flag=0;
                 serverText.setText("");
-                serverText.setEditable(true);
+                serverSend.setEnabled(false);
+//                serverText.setEditable(true);
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (BadLocationException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+//        }
     }//GEN-LAST:event_serverSendActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

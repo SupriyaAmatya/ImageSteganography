@@ -345,7 +345,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
               file = new File(file.getParentFile(), file.getName() + ".jpg");
             }
             try {
-                ImageIO.write(im, "jpg", file);
+                ImageIO.write(im, "png", file);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

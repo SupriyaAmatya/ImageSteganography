@@ -37,7 +37,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         initComponents();
         originalImagePane.setVisible(false);
         stegoImagePane.setVisible(false);
-        sendButton.setVisible(false);
+        okButton.setVisible(false);
         saveButton.setVisible(false);   
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -63,7 +63,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
         keyTextField = new javax.swing.JTextField();
         keyButton = new javax.swing.JButton();
         embedButton = new javax.swing.JButton();
-        sendButton = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
         originalImagePane = new javax.swing.JScrollPane();
         originalImageLabel = new javax.swing.JLabel();
         stegoImagePane = new javax.swing.JScrollPane();
@@ -139,16 +139,16 @@ public class EncryptionPanel extends javax.swing.JPanel{
         });
         add(embedButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 190, 30));
 
-        sendButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        sendButton.setForeground(new java.awt.Color(0, 39, 45));
-        sendButton.setText("Ok");
-        sendButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        okButton.setForeground(new java.awt.Color(0, 39, 45));
+        okButton.setText("Ok");
+        okButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendButtonActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
-        add(sendButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 640, 90, 30));
+        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 640, 90, 30));
 
         originalImagePane.setBackground(new java.awt.Color(0, 39, 45));
         originalImagePane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 102, 204), null), "Original Image", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(8, 177, 206))); // NOI18N
@@ -293,7 +293,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             stegoImageLabel.setIcon(new ImageIcon(img));
             stegoImagePane.getViewport().add(stegoImageLabel);
             stegoImagePane.setVisible(true);
-            sendButton.setVisible(true);
+            okButton.setVisible(true);
             saveButton.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -301,14 +301,14 @@ public class EncryptionPanel extends javax.swing.JPanel{
         }
     }//GEN-LAST:event_embedButtonActionPerformed
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        client.flag = 1;
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+//        client.flag = 1;
         client.image = img;
         clientSend.setEnabled(true);
         client.clientText.setText("(Stego-Image)");
-        client.clientText.setEditable(false);
+//        client.clientText.setEditable(false);
         client.frame.setVisible(false);
-    }//GEN-LAST:event_sendButtonActionPerformed
+    }//GEN-LAST:event_okButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         RenderedImage im = (RenderedImage) img;
@@ -323,7 +323,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
               file = new File(file.getParentFile(), file.getName() + ".jpg");
             }
             try {
-                ImageIO.write(im, "jpg", file);
+                ImageIO.write(im, "png", file);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -339,12 +339,12 @@ public class EncryptionPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton keyButton;
     private javax.swing.JTextField keyTextField;
+    private javax.swing.JButton okButton;
     private javax.swing.JLabel originalImageLabel;
     private javax.swing.JScrollPane originalImagePane;
     private javax.swing.JRadioButton rb1;
     private javax.swing.JRadioButton rb2;
     private javax.swing.JButton saveButton;
-    private javax.swing.JButton sendButton;
     private javax.swing.JLabel stegoImageLabel;
     private javax.swing.JScrollPane stegoImagePane;
     // End of variables declaration//GEN-END:variables

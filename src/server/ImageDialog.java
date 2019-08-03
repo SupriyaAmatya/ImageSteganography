@@ -31,15 +31,13 @@ public class ImageDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        imageLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        imageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Received Stego-Image");
-
-        imageLabel.setAutoscrolls(true);
-        imageLabel.setPreferredSize(new java.awt.Dimension(200, 200));
 
         jButton1.setText("Extract and Decrypt");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -55,19 +53,24 @@ public class ImageDialog extends javax.swing.JDialog {
             }
         });
 
+        imageLabel.setAutoscrolls(true);
+        imageLabel.setPreferredSize(new java.awt.Dimension(200, 200));
+        jScrollPane1.setViewportView(imageLabel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(241, 241, 241)
-                .addComponent(jButton1)
-                .addGap(50, 50, 50)
-                .addComponent(jButton2)
-                .addContainerGap(251, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(jButton1)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
 
@@ -76,9 +79,9 @@ public class ImageDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -102,32 +105,19 @@ public class ImageDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        RenderedImage im = (RenderedImage) image;
-//        JFileChooser saveFileChooser = new JFileChooser("Save File");
-//        saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
-//        if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-//            File file = saveFileChooser.getSelectedFile();
-//            String filename = file.getName().toLowerCase();
-//            if (file == null) {
-//              return;
-//            }
-//            else if(validateName(filename)){
-//              file = new File(file.getParentFile(), file.getName() + ".jpg");
-//            }
-//            try {
-//                ImageIO.write(im, "jpg", file);
-//            } catch (IOException ex) {
-//                Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        
         RenderedImage im = (RenderedImage) image;
         JFileChooser saveFileChooser = new JFileChooser();
         saveFileChooser.setFileFilter(new ExtensionFileFilter("Image Files (png, jpg, jpeg, bmp)", new String[] { "JPG", "JPEG", "PNG", "BMP" }));
         if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File embedFile = saveFileChooser.getSelectedFile();
+            File file = saveFileChooser.getSelectedFile();
+            if (file == null) {
+              return;
+            }
+            else if (validateName(file)){
+              file = new File(file.getParentFile(), file.getName() + ".jpg");
+            }
             try {
-                ImageIO.write(im, "png", embedFile);
+                ImageIO.write(im, "png", file);
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -157,7 +147,6 @@ public class ImageDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(ImageDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
     }
 
@@ -165,5 +154,6 @@ public class ImageDialog extends javax.swing.JDialog {
     private javax.swing.JLabel imageLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile modified="2019-08-05T08:53:01.294Z" host="www.draw.io" agent="Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36" etag="wsObGnKzSBC-uUZHCw2P" version="11.1.1" type="device" compressed="false">
+  <diagram id="htsAAZBpTiQGYYWFsGex" name="Page-1">
+    <mxGraphModel dx="868" dy="435" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-1" value="&lt;b style=&quot;font-size: 14px&quot;&gt;1.1&lt;br&gt;&lt;br&gt;Encrypt and &lt;br&gt;Embed Process&lt;br&gt;&lt;br&gt;&lt;/b&gt;" style="shape=ellipse;html=1;dashed=0;whitespace=wrap;aspect=fixed;perimeter=ellipsePerimeter;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="140" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-2" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;Sender&lt;/font&gt;&lt;/b&gt;" style="html=1;dashed=0;whitespace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="80" y="145" width="100" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-3" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-2" target="DvHmXenctxhBWOCL0bb0-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="290" as="sourcePoint"/>
+            <mxPoint x="230" y="240" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-12" value="&lt;b&gt;Text Message&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-3">
+          <mxGeometry x="0.3286" y="-1" relative="1" as="geometry">
+            <mxPoint x="-33" y="-1" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-4" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-2" target="DvHmXenctxhBWOCL0bb0-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="150" y="124.5" as="sourcePoint"/>
+            <mxPoint x="430" y="120" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="130" y="120"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-11" value="&lt;b&gt;Cover Image&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-4">
+          <mxGeometry x="0.3164" y="-2" relative="1" as="geometry">
+            <mxPoint x="-20" y="-2.5" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-5" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-2" target="DvHmXenctxhBWOCL0bb0-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="190" as="sourcePoint"/>
+            <mxPoint x="340" y="228" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="130" y="220"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-15" value="&lt;b&gt;Shared Key&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-5">
+          <mxGeometry x="-0.0961" y="1" relative="1" as="geometry">
+            <mxPoint x="29" y="1" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-10" value="" style="endArrow=none;html=1;entryX=0.979;entryY=0.343;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.007;exitY=0.357;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-1" target="DvHmXenctxhBWOCL0bb0-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="185" as="sourcePoint"/>
+            <mxPoint x="400" y="135" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-16" value="&lt;b style=&quot;font-size: 14px&quot;&gt;1.2&lt;br&gt;&lt;br&gt;Transmission &lt;br&gt;Model&lt;br&gt;&lt;br&gt;&lt;/b&gt;" style="shape=ellipse;html=1;dashed=0;whitespace=wrap;aspect=fixed;perimeter=ellipsePerimeter;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="310" width="140" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-17" value="" style="endArrow=classic;html=1;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-1" target="DvHmXenctxhBWOCL0bb0-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="520" as="sourcePoint"/>
+            <mxPoint x="130" y="470" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-18" value="&lt;b&gt;Stego Image&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-17">
+          <mxGeometry x="-0.2857" y="2" relative="1" as="geometry">
+            <mxPoint x="-2" y="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-19" value="" style="endArrow=none;html=1;entryX=1;entryY=0.428;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.021;exitY=0.414;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="DvHmXenctxhBWOCL0bb0-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="319.94000000000005" y="369.96000000000004" as="sourcePoint"/>
+            <mxPoint x="455.03999999999996" y="369.96000000000004" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-20" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;Receiver&lt;/font&gt;&lt;/b&gt;" style="html=1;dashed=0;whitespace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="590" y="360" width="100" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-21" value="" style="endArrow=classic;html=1;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-16" target="DvHmXenctxhBWOCL0bb0-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="395" as="sourcePoint"/>
+            <mxPoint x="590" y="385" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-22" value="&lt;b&gt;Stego Image&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-21">
+          <mxGeometry x="0.3286" y="-1" relative="1" as="geometry">
+            <mxPoint x="-21" y="-4" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-23" value="&lt;b style=&quot;font-size: 14px&quot;&gt;1.3&lt;br&gt;&lt;br&gt;Extract and &lt;br&gt;Decrypt Process&lt;br&gt;&lt;br&gt;&lt;/b&gt;" style="shape=ellipse;html=1;dashed=0;whitespace=wrap;aspect=fixed;perimeter=ellipsePerimeter;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="510" width="140" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-24" value="" style="endArrow=classic;html=1;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-16" target="DvHmXenctxhBWOCL0bb0-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="389" y="450" as="sourcePoint"/>
+            <mxPoint x="389" y="520" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-25" value="&lt;b&gt;Stego Image&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-24">
+          <mxGeometry x="-0.2857" y="2" relative="1" as="geometry">
+            <mxPoint x="-2" y="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-26" value="" style="endArrow=none;html=1;entryX=1;entryY=0.428;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.021;exitY=0.414;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="319.94000000000005" y="569.96" as="sourcePoint"/>
+            <mxPoint x="460" y="569.92" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-27" value="" style="endArrow=classic;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.571;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-20" target="DvHmXenctxhBWOCL0bb0-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="730" as="sourcePoint"/>
+            <mxPoint x="130" y="680" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="615" y="590"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-29" value="&lt;b&gt;Shared Key&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-27">
+          <mxGeometry x="0.6119" y="2" relative="1" as="geometry">
+            <mxPoint x="15" y="-2" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-28" value="" style="endArrow=classic;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.66;entryY=1.04;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DvHmXenctxhBWOCL0bb0-23" target="DvHmXenctxhBWOCL0bb0-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="625" y="420" as="sourcePoint"/>
+            <mxPoint x="470" y="599.94" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="656" y="629"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DvHmXenctxhBWOCL0bb0-30" value="&lt;b&gt;Hidden text message&lt;/b&gt;" style="text;html=1;resizable=0;points=[];align=center;verticalAlign=middle;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="DvHmXenctxhBWOCL0bb0-28">
+          <mxGeometry x="-0.5594" y="1" relative="1" as="geometry">
+            <mxPoint x="14.5" y="1.5" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

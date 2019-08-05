@@ -1,2 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile modified="2019-06-26T10:49:25.356Z" host="www.draw.io" agent="Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36" etag="PqZZOajO4P1unq8F-xyx" version="10.8.0" type="device"><diagram id="Ey2vaf8V4zCWE3hwGzIT" name="Page-1">7VtZk+I2EP41rto8MOUTzCPXZFPJVKZqJsnu05bAwmhjS14hGJxfv5IlnxjwzAA2U3kB1NbRrZb668No1iTc/UpBtHogHgw0U/d2mjXVTNO1df4pCLEk2JYjCT5FniQZOeEJ/QcVUY3zN8iD61JHRkjAUFQmLgjGcMFKNEApeSl3W5KgvGoEfLhHeFqAYJ/6D/LYSonl6Dn9M0T+Kl3Z0NWTEKSdFWG9Ah55KZCsmWZNKCFM/gp3ExiIvUv3RY67P/A0Y4xCzJoM+PG4+RKS2d/f/pouvn2d9EcuGPeUMrYg2CiBNbMf8PnGkWCZxWof+j82gs9xCKiPsGaN+FM92vFPTkykFfQeI5F8ZheeMbhjPRAgX41bcIYhzefkv3z1naw8Twm/hUIXDPoAE1+crjjtwqWcV4dxWlSldUCIjEBrGG4kxIoKKdKbkS5oHF77TVIHcMkKYlfn7vEHiT5knydGEfbPvvUNmHjmiuBfD3C9fgU3ndhDzRR9IV7QOGKI4EeAhbGUC64jgNOOn34pyFJ8cO0Nr2NOSuHBkhQJxyDkF2eM5+uozOppCcwS7+YWUoa4DR7J+zZNbuRY3b6p5HlMeK9lkFjUJeKWzhovCWYKQQxTte9BiAKBPZ9hsIViVnEaWBiITtnaYkG4O2hYjcxcc5iDJISMclOkqwEcDeQQBXGuMvgvOV4YA0VbFbHCUkSgMMrPps7NOP+hLPkrrLpl720p9IQplU1C2Yr4BINgllPHlGywB8W04ojkff4gYveTzfoOGYvVDoMNI+WthDvEvojhd7reV+2vSXswdFR7ulPzJ41YNYqKs9TDR0gR3w1uY2UfKZEQ47iauNRkQxfwyPYM6tVJYQAY2pbnr9ONGvpIEGb5MRjqpVPg6BXtMn7jIFODKgrOuHi7zgddRvJZvc27OQScCKNz20h4KW5+h/ENgvEaBjxqSNSa6LSEvFeC2ORmgX+hUmSbLHAltrU8d4t47NjW6h5aRwGIRbBBWj0Ia4i9jAGdJDcFbOFRnm7aezKMMm6aVlP3yb2U+2RbNVh6fX+qzisS/pWx51/1rcFR/6rOn+LqobF011zTSQlivh534OSCgpLPmLTiYuuCPpqrcj2J03RMV+Y7nbl3nRS3y07XFH4Mpysxyl1xug64ObXZnW5uqcSZgACvfbTzYAdA/0+K+BAQtOx/CZh/Jvco+Jg479hVnHf2cb5fmyZxLoXzZsfNN78b/1vtKwenl2IhtTJaHrGLSW4qYj6UDOZHnIIFqzOgdbnfZmD5YSNdj+Se2W1A320DTyUxa6dAdBJ4nEsBj2U0CDCxNxL1a97yEAgJ9p5XQus88vLukw2VSXecFs1NWzsePmYBn1YI9vS7QRb8HQj1mkd1J6M1p15TdZp4ZzbeqGjdNN3yFDIC3UvH701Ure4Y6fE5kdfnygNxoVskOqybM2wM3Mo5kzOetWhg1XlAFz+IWZ3Itlwtz2P0ioWjA4mM9Awbd7rhls+xOzRPHOTanMWFa01N8xjXuxlZYaqacHvtzXCGTu2JPffN6FcyhMawf4Wb0ek3Y2b4ZmODOi+ycTWrW95kRyKLThUl3xT2deRgSudc1ao/pWzn4dqkIIxQfGvxwyycQ6+t0GFBIWDwdO7wpoOGSrIqw8wCHme4WYoZ+hUwPV/M0OlawxN3/x4AuuEiQyi4b9t4bubfk5eY22VjxBhYrMLkqoiOIifdeSXm5fMPbpqsiv9um/u2qT6fYVzMNg1fFUZigmF5W05X048Uw7O2jAOHp2LI48XwUik8jyHfmxpp9lJig0BR4sDZ316svr5oOZXD0jQqtJ0TE735PUjezP8tIbvnfzmxZj8B</diagram></mxfile>
+<mxfile modified="2019-08-04T18:08:46.696Z" host="www.draw.io" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36" etag="D7U02tPwtLbxv8EaS5o-" version="11.1.1" type="device" compressed="false">
+  <diagram id="Ey2vaf8V4zCWE3hwGzIT" name="Page-1">
+    <mxGraphModel dx="868" dy="484" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-5" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;ImageSteganography&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Image: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Text Message: String&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ encryptionPanel&lt;span&gt;()&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span&gt;+ decryptionPanel()&amp;nbsp;&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="285" y="80" width="170" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.006;exitY=0.795;exitDx=0;exitDy=0;fontSize=13;exitPerimeter=0;" parent="1" source="qPuXmoEV_UDc_YC6A8aB-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="500" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-7" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;EncryptionPanel&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Cover Image: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Text Message: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Key: String&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ selectCoverImage()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ takeMessage()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ takeKey()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ encode()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ displayStegoImage()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ sendImage() or saveImage()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="110" y="230" width="170" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;exitX=1.006;exitY=0.637;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.825;entryY=-0.013;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="qPuXmoEV_UDc_YC6A8aB-8" target="qPuXmoEV_UDc_YC6A8aB-42" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-8" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;DecryptionPanel&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Stego Image: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Key: String&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ loadStegoImage()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ decode()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ displayOriginalMessage()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ saveToFile()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="540" y="235" width="160" height="135" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-42" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;Decode&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Stego Image: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Key: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Original Message : String&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span&gt;+ extractMessage()&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ takeKey()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ doDecryption()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ displayOriginalMessage()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="590" y="440" width="160" height="155" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-31" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;fontSize=13;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" target="qPuXmoEV_UDc_YC6A8aB-5" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="190" y="228" as="sourcePoint"/>
+            <mxPoint x="285" y="140" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="190" y="178"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-32" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;fontSize=13;exitX=0.438;exitY=-0.006;exitDx=0;exitDy=0;entryX=1.018;entryY=0.892;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" parent="1" source="qPuXmoEV_UDc_YC6A8aB-8" target="qPuXmoEV_UDc_YC6A8aB-5" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="500" y="230" as="sourcePoint"/>
+            <mxPoint x="595" y="178" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="610" y="196"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-35" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;Encode&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span&gt;- Text Message: String&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Key: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Cover Image: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Stego Image: String&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ doEncrypt(String Message, String Key)&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ doEmbed()&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ createStegoImage()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="500" width="230" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-38" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;span&gt;SendMail&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Smail: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Subject: String&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;- Attachment: File&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ sendStegoImage()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="300" y="420" width="160" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="qPuXmoEV_UDc_YC6A8aB-39" value="" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;fontSize=13;exitX=1.013;exitY=0.906;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="qPuXmoEV_UDc_YC6A8aB-7" target="qPuXmoEV_UDc_YC6A8aB-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="350" as="sourcePoint"/>
+            <mxPoint x="450" y="350" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

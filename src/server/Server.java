@@ -11,6 +11,7 @@ import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 //import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,7 +99,7 @@ public class Server extends JFrame{
         }
     }
     
-    public void sendImage() throws IOException, BadLocationException{
+    public void sendImage() throws BadLocationException, IOException{
 //        ImageIO.write(image, "png", cs.getOutputStream());
 //        cs.getOutputStream().flush();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -237,10 +238,22 @@ public class Server extends JFrame{
                 serverText.setText("");
                 serverSend.setEnabled(false);
 //                serverText.setEditable(true);
+            } catch(NullPointerException ex){ 
+                try {
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Error! No client found.",null);
+                } catch (BadLocationException ex1) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            } catch(SocketException ex){
+                try {
+                    serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Cannot Send Image. Connection to client lost.",null);
+                } catch (BadLocationException ex1) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }catch (BadLocationException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
 //        }
     }//GEN-LAST:event_serverSendActionPerformed

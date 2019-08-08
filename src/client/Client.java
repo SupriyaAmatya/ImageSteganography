@@ -108,7 +108,7 @@ public class Client extends javax.swing.JFrame {
     //        this.dispose();
         }
         catch(IOException ioException){ 
-            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Unable to Send Image.",null);
+            clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Unable to Send Image. Server inactive.",null);
         }
     }
     

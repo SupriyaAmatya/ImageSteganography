@@ -95,24 +95,24 @@ public class Encode {
                     red = Integer.parseInt(ToBinary(c.getRed()).substring(0,7)+msgBit[count++],2);
                     if(count>=msgBit.length)
                             { flag = 1;
-                            la:
-                                {
+//                            la:
+//                                {
                                 green = c.getGreen();
                                 blue = c.getBlue();
                                 c = new Color(red,green,blue);
                                 image.setRGB(j,i,c.getRGB());
-                                }
+//                                }
                             break;
                             }
                     green = Integer.parseInt(ToBinary(c.getGreen()).substring(0,7)+msgBit[count++],2);
                     if(count>=msgBit.length)
                             { flag = 1;
-                            la:
-                                {
+//                            la:
+//                                {
                                 blue = c.getBlue();
                                 c = new Color(red,green,blue);
                                 image.setRGB(j,i,c.getRGB());
-                                }
+//                                }
                                 break;
                             }
                     blue = Integer.parseInt(ToBinary(c.getBlue()).substring(0,7)+msgBit[count++],2);

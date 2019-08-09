@@ -315,9 +315,9 @@ public class EncryptionPanel extends javax.swing.JPanel{
             stegoImagePane.setVisible(true);
             sendButton.setVisible(true);
             saveButton.setVisible(true);
-        } catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(new JFrame("Error!!"), "ERROR!! Please enter/re-check all input data.");
+            JOptionPane.showMessageDialog(new JFrame("Error!!"), "Please enter/re-check all input data.");
         }
     }//GEN-LAST:event_embedButtonActionPerformed
 

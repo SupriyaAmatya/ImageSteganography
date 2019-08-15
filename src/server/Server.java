@@ -43,12 +43,15 @@ public class Server extends JFrame{
         try
         {
             s=new ServerSocket(port, 10);
+            System.out.println("Server started successfully.");
+            System.out.println("Waiting for client..........");
             while(true)
             {
                 try
                 {
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Waiting for Someone to Connect...",null);
                     cs=s.accept();
+                    System.out.println("Connected to "+cs.getInetAddress().getHostName());
                     serverDisplay.getDocument().insertString(serverDisplay.getDocument().getLength(),"\n  Connected to "+cs.getInetAddress().getHostName(),null);
                     output = new ObjectOutputStream(cs.getOutputStream());
                     output.flush();

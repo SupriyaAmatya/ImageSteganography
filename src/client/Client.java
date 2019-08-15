@@ -40,6 +40,7 @@ public class Client extends javax.swing.JFrame {
         try
         {
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Attempting Connection ...",null);
+            System.out.println("Attempting Connection ...");
             try
             {
                 con = new Socket(InetAddress.getByName(serverIP),port);
@@ -48,6 +49,7 @@ public class Client extends javax.swing.JFrame {
                 setVisible(false);
             }
             clientDisplay.getDocument().insertString(clientDisplay.getDocument().getLength(),"\n  Connected to: " + con.getInetAddress().getHostName(),null);
+            System.out.println("Connected to: " + con.getInetAddress().getHostName());
             output = new ObjectOutputStream(con.getOutputStream());
             output.flush();
             input = new ObjectInputStream(con.getInputStream());

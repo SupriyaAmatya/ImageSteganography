@@ -6,6 +6,7 @@ import static imagesteganography.MethodsUsed.keyGeneration;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.security.Key;
+import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 
@@ -31,7 +32,7 @@ public class Decode {
             }
         }
 
-//        System.out.print(Arrays.toString(messageBits));
+        System.out.print(Arrays.toString(messageBits));
         count = 0;
         StringBuilder length = new StringBuilder("");
         StringBuilder letterBinary;
@@ -74,6 +75,7 @@ public class Decode {
         byte[] decodedValue = new BASE64Decoder().decodeBuffer(messageCipher);
         byte[] original = cipher.doFinal(decodedValue);
         String message = new String(original);
+        System.out.println(message);
         return message;
     }
 }

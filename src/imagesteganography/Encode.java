@@ -7,14 +7,15 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.Key;
+import java.util.concurrent.*;
 import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 
 public class Encode {
-
-    public static BufferedImage encrypt(String message, String key) throws Exception{
+    public static BufferedImage encrypt(String message, String key) throws Exception{ 
+        long startTime = System.nanoTime();
         Key k = keyGeneration(key);
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE,k);
@@ -22,7 +23,11 @@ public class Encode {
         String messageCipher = new BASE64Encoder().encode(encrypted);
         BufferedImage img = embed(messageCipher);
 //        System.out.println(messageCipher);
-        return img;
+//        TimeUnit.SECONDS.sleep(5);
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time in nanoseconds: " + timeElapsed);
+        return img;	
     }
     
     public static BufferedImage embed(String messageCipher) throws IOException{
@@ -302,6 +307,5 @@ public class Encode {
 //        System.out.println("Successful! New cover image created");
       
         return image;
-    }
-   
+    }   
 }

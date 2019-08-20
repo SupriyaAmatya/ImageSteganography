@@ -302,7 +302,7 @@ public class EncryptionPanel extends javax.swing.JPanel{
             } catch (IOException ex) {
                 Logger.getLogger(EncryptionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(msg.toString());
+//            System.out.println(msg.toString());
             message = msg.toString();     
         }
     }//GEN-LAST:event_fileButtonActionPerformed

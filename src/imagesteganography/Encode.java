@@ -15,7 +15,8 @@ import javax.swing.*;
 
 public class Encode {
     public static BufferedImage encrypt(String message, String key) throws Exception{ 
-        long startTime = System.nanoTime();
+//        long startTime = System.nanoTime();
+//        long startTime = System.currentTimeMillis();
         Key k = keyGeneration(key);
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE,k);
@@ -23,10 +24,10 @@ public class Encode {
         String messageCipher = new BASE64Encoder().encode(encrypted);
         BufferedImage img = embed(messageCipher);
 //        System.out.println(messageCipher);
-//        TimeUnit.SECONDS.sleep(5);
-        long endTime = System.nanoTime();
-        long timeElapsed = endTime - startTime;
-        System.out.println("Execution time in nanoseconds: " + timeElapsed);
+//        long endTime = System.nanoTime();
+//        long endTime = System.currentTimeMillis();
+//        long timeElapsed = endTime - startTime;
+//        System.out.println("Execution time in nanoseconds: " + timeElapsed);
         return img;	
     }
     

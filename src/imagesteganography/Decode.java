@@ -68,20 +68,20 @@ public class Decode {
     }
     
     public static String decrypt(String messageCipher) throws Exception{
-        long startTime = System.nanoTime();
+//        long startTime = System.nanoTime();
+//        long startTime = System.currentTimeMillis();
         String key = DecryptionPanel.key;
         Key k = keyGeneration(key);
-        
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, k);
         byte[] decodedValue = new BASE64Decoder().decodeBuffer(messageCipher);
         byte[] original = cipher.doFinal(decodedValue);
         String message = new String(original);
 //        System.out.println(message);
-//        TimeUnit.SECONDS.sleep(5);
-        long endTime = System.nanoTime();
-        long timeElapsed = endTime - startTime;
-        System.out.println("Execution time in nanoseconds: " + timeElapsed);
+//        long endTime = System.currentTimeMillis();
+//        long endTime = System.nanoTime();
+//        long timeElapsed = endTime - startTime;
+//        System.out.println("Execution time in nanoseconds: " + timeElapsed);
 //        System.out.println("Execution time in milliseconds: " + timeElapsed);
         return message;
     }
